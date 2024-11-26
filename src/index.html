@@ -1,13 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate team Builder</title>
-    <link rel="stylesheet" href="index.css">
-    <script src="index.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultimate Team Builder</title>
+  <link rel="stylesheet" href="index.css">
+  <script src="index.js" defer></script>
+  <style>
+    /* Custom Styles for the Soccer Field */
+    #field {
+      position: relative;
+      background-image: url('assets/field.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 100%;
+      aspect-ratio: 1180 / 1072; /* Matches the image dimensions */
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+  </style>
 </head>
-<body>
-    
+<body class="bg-gray-100 overflow-x-hidden">
+
+  <div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <header class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-gray-800">FUT Builder</h1>
+      <div class="mt-4 space-x-4">
+        <select id="formation" class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+          <option value="4-4-2">4-4-2</option>
+          <option value="4-3-3">4-3-3</option>
+        </select>
+        <span class="text-lg font-semibold text-gray-700">
+          Chemistry: <span id="chemistry" class="text-blue-600">0</span>/100
+        </span>
+      </div>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Available Players -->
+      <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-semibold mb-4 text-gray-800">Available Players</h2>
+        <div class="mb-4">
+          <input
+            type="text"
+            id="playerSearch"
+            placeholder="Search players..."
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm"
+          />
+        </div>
+        <div id="playerList" class="space-y-2 max-h-[600px] overflow-y-auto">
+          <!-- Player list items go here -->
+        </div>
+      </div>
+
+      <!-- Soccer Field -->
+      <div class="col-span-2">
+        <div id="field"></div>
+      </div>
+    </div>
+
+    <!-- Current Squad -->
+    <div class="lg:col-span-3 bg-white p-6 rounded-lg shadow-lg mt-8">
+      <h2 class="text-2xl font-semibold mb-4 text-gray-800">Current Squad</h2>
+      <div
+        id="squadList"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+      >
+        <!-- Squad player cards go here -->
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
