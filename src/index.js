@@ -455,6 +455,52 @@ let state = {
   chemistry: 0,
 };
 
+const positionsMap443 = {
+  // Goalkeeper
+  GK: { x: 50, y: 90 },
+
+  // Defenders
+  LB: { x: 20, y: 70 },
+  CB1: { x: 35, y: 70 },
+  CB2: { x: 65, y: 70 },
+  RB: { x: 80, y: 70 },
+
+  // Midfielders
+  CM1: { x: 35, y: 45 },
+  CM2: { x: 50, y: 45 },
+  CM3: { x: 65, y: 45 },
+
+  // Attackers
+  LW: { x: 20, y: 20 },
+  ST: { x: 50, y: 20 },
+  RW: { x: 80, y: 20 },
+};
+
+const positionsMap442 = {
+  // Goalkeeper
+  GK: { x: 50, y: 90 },
+
+  // Defenders
+  LB: { x: 20, y: 70 },
+  CB1: { x: 35, y: 70 },
+  CB2: { x: 65, y: 70 },
+  RB: { x: 80, y: 70 },
+
+  // Midfielders
+  LM: { x: 20, y: 45 },
+  CM1: { x: 35, y: 45 },
+  CM2: { x: 65, y: 45 },
+  RM: { x: 80, y: 45 },
+  CDM: { x: 50, y: 45 },
+
+  // Attackers
+  ST1: { x: 35, y: 20 },
+  ST2: { x: 65, y: 20 },
+  ST: { x: 50, y: 20 },
+  LW: { x: 20, y: 20 },
+  RW: { x: 80, y: 20 },
+};
+
 let playerList = document.getElementById("playerList");
 
 let selectFormation = document.getElementById("formation");
@@ -472,59 +518,7 @@ function createStatBar(value, label) {
     `;
 }
 
-// Function to create a player card
-function renderAvailablePlayers(searchTerm = "") {
-  const playerList = document.getElementById("playerList");
-  const filteredPlayers = playerDatabase.filter(
-    (player) =>
-      player.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      player.club.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      player.nationality.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
-  playerDatabase.forEach((player) => {
-    let PlayerCard = document.createElement("div");
-    PlayerCard.innerHTML = `
-        <div class="border rounded-lg p-4 hover:bg-gray-50 cursor-pointer" 
-             >
-            <div class="flex items-center space-x-4">
-                <img src="${player.photo}" alt="${
-      player.name
-    }" class="w-16 h-16 object-cover">
-                <div class="flex-1">
-                    <div class="flex items-center space-x-2">
-                        <span class="font-bold">${player.name}</span>
-                        <img src="${player.flag}" alt="${
-      player.nationality
-    }" class="w-6 h-4">
-                    </div>
-                    <div class="flex items-center space-x-2 text-sm text-gray-600">
-                        <span>${player.position}</span>
-                        <span>|</span>
-                        <img src="${player.logo}" alt="${
-      player.club
-    }" class="w-6 h-6">
-                        <span>${player.club}</span>
-                    </div>
-                    <div class="mt-2">
-                        ${createStatBar(player.pace, "PAC")}
-                        ${createStatBar(player.shooting, "SHO")}
-                        ${createStatBar(player.passing, "PAS")}
-                        ${createStatBar(player.dribbling, "DRI")}
-                        ${createStatBar(player.defending, "DEF")}
-                        ${createStatBar(player.physical, "PHY")}
-                    </div>
-                </div>
-                <div class="text-2xl font-bold bg-yellow-400 rounded-full w-12 h-12 flex items-center justify-center">
-                    ${player.rating}
-                </div>
-            </div>
-        </div>
-    `;
-    PlayerCard.className = "player-card";
-    playerList.appendChild(PlayerCard);
-  });
-}
 renderAvailablePlayers();
 document.getElementById("playerSearch").addEventListener("input", (e) => {
   renderAvailablePlayers(e.target.value);
@@ -555,49 +549,59 @@ function renderAvailablePlayers(searchTerm = "") {
       player.nationality.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Clear the player list before rendering
   playerList.innerHTML = "";
 
   filteredPlayers.forEach((player) => {
     let playerCard = document.createElement("div");
     playerCard.className =
       "border rounded-lg p-4 hover:bg-gray-50 cursor-pointer player-card";
-    playerCard.innerHTML = `
-          <div class="flex items-center space-x-4">
-              <img src="${player.photo}" alt="${
-      player.name
-    }" class="w-16 h-16 object-cover">
-              <div class="flex-1">
-                  <div class="flex items-center space-x-2">
-                      <span class="font-bold">${player.name}</span>
-                      <img src="${player.flag}" alt="${
-      player.nationality
-    }" class="w-6 h-4">
-                  </div>
-                  <div class="flex items-center space-x-2 text-sm text-gray-600">
-                      <span>${player.position}</span>
-                      <span>|</span>
-                      <img src="${player.logo}" alt="${
-      player.club
-    }" class="w-6 h-6">
-                      <span>${player.club}</span>
-                  </div>
-                  <div class="mt-2">
-                      ${createStatBar(player.pace, "PAC")}
-                      ${createStatBar(player.shooting, "SHO")}
-                      ${createStatBar(player.passing, "PAS")}
-                      ${createStatBar(player.dribbling, "DRI")}
-                      ${createStatBar(player.defending, "DEF")}
-                      ${createStatBar(player.physical, "PHY")}
-                  </div>
-              </div>
-              <div class="text-2xl font-bold bg-yellow-400 rounded-full w-12 h-12 flex items-center justify-center">
-                  ${player.rating}
-              </div>
-          </div>
-      `;
 
-    // Add event listener for click to add to squad
+    // Check if player is a goalkeeper
+    const isGoalkeeper = player.position === "GK";
+
+    const statsHTML = isGoalkeeper
+      ? `
+      ${createStatBar(player.diving, "DIV")}
+      ${createStatBar(player.handling, "HAN")}
+      ${createStatBar(player.kicking, "KIC")}
+      ${createStatBar(player.reflexes, "REF")}
+      ${createStatBar(player.speed, "SPD")}
+      ${createStatBar(player.positioning, "POS")}
+    `
+      : `
+      ${createStatBar(player.pace, "PAC")}
+      ${createStatBar(player.shooting, "SHO")}
+      ${createStatBar(player.passing, "PAS")}
+      ${createStatBar(player.dribbling, "DRI")}
+      ${createStatBar(player.defending, "DEF")}
+      ${createStatBar(player.physical, "PHY")}
+    `;
+
+    playerCard.innerHTML = `
+      <div class="flex items-center space-x-4">
+        <img src="${player.photo}" alt="${player.name}" class="w-16 h-16 object-cover">
+        <div class="flex-1">
+          <div class="flex items-center space-x-2">
+            <span class="font-bold">${player.name}</span>
+            <img src="${player.flag}" alt="${player.nationality}" class="w-6 h-4">
+          </div>
+          <div class="flex items-center space-x-2 text-sm text-gray-600">
+            <span>${player.position}</span>
+            <span>|</span>
+            <img src="${player.logo}" alt="${player.club}" class="w-6 h-6">
+            <span>${player.club}</span>
+          </div>
+          <div class="mt-2">
+            ${statsHTML}
+          </div>
+        </div>
+        <div class="text-2xl font-bold bg-yellow-400 rounded-full w-12 h-12 flex items-center justify-center">
+          ${player.rating}
+        </div>
+      </div>
+    `;
+
+   
     playerCard.addEventListener("click", () => addToSquad(player));
 
     playerList.appendChild(playerCard);
@@ -615,36 +619,37 @@ let selectedPlayers = [];
 selectedPlayers = JSON.parse(localStorage.getItem("selectedPlayers")) || [];
 
 // Function to add player to the squad
-// Function to add player to the squad
+
 function addToSquad(player) {
-    if (selectedPlayers.length < 11) {
-      // Check if player is already in squad
-      if (selectedPlayers.some((p) => p.name === player.name)) {
-        alert("Player already in the squad.");
-        return;
-      }
-  
-      // Add player to squad
-      selectedPlayers.push(player);
-  
-      // Create a squad card for the player
-      let squadCard = createSquadCard(player);
-  
-      // Append the new squad card to the list
-      squadList.appendChild(squadCard);
-  
-      // Store the updated squad in localStorage
-      localStorage.setItem("selectedPlayers", JSON.stringify(selectedPlayers));
-    } else {
-      alert("You cannot add more than 11 players to the squad.");
+  if (selectedPlayers.length < 11) {
+    // Check if player is already in squad
+    if (selectedPlayers.some((p) => p.name === player.name)) {
+      alert("Player already in the squad.");
+      return;
     }
+
+    // Add player to squad
+    selectedPlayers.push(player);
+
+    // Create a squad card for the player
+    let squadCard = createSquadCard(player);
+
+    // Append the new squad card to the list
+    squadList.appendChild(squadCard);
+
+    
+    localStorage.setItem("selectedPlayers", JSON.stringify(selectedPlayers));
+  } else {
+    alert("You cannot add more than 11 players to the squad.");
   }
-  
-  // Function to create a squad card for a player
-  function createSquadCard(player) {
-    let squadCard = document.createElement("div");
-    squadCard.className = "border rounded-lg p-4 mb-2 flex items-center space-x-4";
-    squadCard.innerHTML = `
+}
+
+// Function to create a squad card for a player
+function createSquadCard(player) {
+  let squadCard = document.createElement("div");
+  squadCard.className =
+    "border rounded-lg p-4 mb-2 flex items-center space-x-4";
+  squadCard.innerHTML = `
       <img src="${player.photo}" alt="${player.name}" class="w-16 h-16 object-cover">
       <div class="flex-1">
         <div class="flex items-center space-x-2">
@@ -658,28 +663,31 @@ function addToSquad(player) {
       </div>
       <button class="text-red-500" onclick="removeFromSquad('${player.name}')">Remove</button>
     `;
-    return squadCard;
-  }
-  
-  // Function to remove a player from the squad
-  function removeFromSquad(playerName) {
-    // Filter out the removed player
-    selectedPlayers = selectedPlayers.filter((player) => player.name !== playerName);
-  
-    // Re-render the squad list after removal
-    renderSquad();
-  }
-  
-  // Function to render the squad list
-  function renderSquad() {
-    squadList.innerHTML = ""; // Clear the squad list
-    selectedPlayers.forEach((player) => {
-      // Create and append squad cards for all players in the squad
-      let squadCard = createSquadCard(player);
-      squadList.appendChild(squadCard);
-    });
-  }
-  
-  // Initial rendering of the squad
+  return squadCard;
+}
+
+// Function to remove a player from the squad
+function removeFromSquad(playerName) {
+  // Filter out the removed player
+  selectedPlayers = selectedPlayers.filter(
+    (player) => player.name !== playerName
+  );
+
+  // Re-render the squad list after removal
   renderSquad();
-  
+}
+
+// Function to render the squad list
+function renderSquad() {
+  squadList.innerHTML = ""; // Clear the squad list
+  selectedPlayers.forEach((player) => {
+    // Create and append squad cards for all players in the squad
+    let squadCard = createSquadCard(player);
+    squadList.appendChild(squadCard);
+  });
+}
+
+// Initial rendering of the squad
+renderSquad();
+
+
