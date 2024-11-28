@@ -702,7 +702,7 @@ function openCustomPlayerModal() {
     <button id="closeCustomPlayerModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700  ">
       Close
     </button>
-    <h2 class="text-2xl font-bold mb-4 mt-20">Create Custom Player</h2>
+    <h2 class="text-2xl font-bold mb-4 mt-16">Add Custom Player</h2>
     
     <div class="mb-4">
       <label class="block mb-2">Player Type</label>
