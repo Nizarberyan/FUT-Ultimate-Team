@@ -416,6 +416,9 @@ let playerDatabase = [
     positioning: 85,
   },
 ];
+if (localStorage.getItem("playerDatabase") !== null) {
+  playerDatabase = JSON.parse(localStorage.getItem("playerDatabase"));
+}
 //formations Database
 const formations = [
   {
@@ -452,54 +455,9 @@ const formations = [
 let state = {
   formation: "4-4-2",
   players: [],
-  chemistry: 0,
+  chemistry: 100,
 };
-
-const positionsMap443 = {
-  // Goalkeeper
-  GK: { x: 50, y: 90 },
-
-  // Defenders
-  LB: { x: 20, y: 70 },
-  CB1: { x: 35, y: 70 },
-  CB2: { x: 65, y: 70 },
-  RB: { x: 80, y: 70 },
-
-  // Midfielders
-  CM1: { x: 35, y: 45 },
-  CM2: { x: 50, y: 45 },
-  CM3: { x: 65, y: 45 },
-
-  // Attackers
-  LW: { x: 20, y: 20 },
-  ST: { x: 50, y: 20 },
-  RW: { x: 80, y: 20 },
-};
-
-const positionsMap442 = {
-  // Goalkeeper
-  GK: { x: 50, y: 90 },
-
-  // Defenders
-  LB: { x: 20, y: 70 },
-  CB1: { x: 35, y: 70 },
-  CB2: { x: 65, y: 70 },
-  RB: { x: 80, y: 70 },
-
-  // Midfielders
-  LM: { x: 20, y: 45 },
-  CM1: { x: 35, y: 45 },
-  CM2: { x: 65, y: 45 },
-  RM: { x: 80, y: 45 },
-  CDM: { x: 50, y: 45 },
-
-  // Attackers
-  ST1: { x: 35, y: 20 },
-  ST2: { x: 65, y: 20 },
-  ST: { x: 50, y: 20 },
-  LW: { x: 20, y: 20 },
-  RW: { x: 80, y: 20 },
-};
+document.getElementById("chemistry").textContent = state.chemistry;
 
 let playerList = document.getElementById("playerList");
 
@@ -644,22 +602,67 @@ function addToSquad(player) {
 // Function to create a squad card for a player
 function createSquadCard(player) {
   let squadCard = document.createElement("div");
-  squadCard.className =
-    "border rounded-lg p-4 mb-2 flex items-center space-x-4";
+
+  // Set the card's dimensions and background image
+  squadCard.className = "relative text-white rounded-lg";
+  squadCard.style.width = "252px";
+  squadCard.style.height = "350px";
+  squadCard.style.backgroundImage = `url(https://raw.githubusercontent.com/aymanebenhima/FUT-Champ-Ultimate-Team-Assets/refs/heads/main/src/assets/img/badge_ballon_dor.webp)`;
+  squadCard.style.backgroundSize = "cover";
+  squadCard.style.backgroundPosition = "center";
+
   squadCard.innerHTML = `
-      <img src="${player.photo}" alt="${player.name}" class="w-16 h-16 object-cover">
-      <div class="flex-1">
-        <div class="flex items-center space-x-2">
-          <span class="font-bold">${player.name}</span>
-          <img src="${player.flag}" alt="${player.nationality}" class="w-6 h-4">
-          <img src="${player.logo}" alt="${player.club}" class="w-6 h-6">
+    <!-- Top-right: Club and Nationality -->
+    <div class="absolute top-2 right-2 flex items-center space-x-1">
+      <img src="${player.flag}" alt="${player.nationality}" class="w-4 h-3">
+      <img src="${player.logo}" alt="${player.club}" class="w-4 h-4">
+    </div>
+
+    <!-- Center: Player photo and details -->
+    <div class="absolute top-16 left-1/2 transform -translate-x-1/2 text-center">
+      <img src="${player.photo}" alt="${player.name}" class="mx-auto w-12 h-12 rounded-full border border-white">
+      <h3 class="font-bold text-sm mt-1">${player.name}</h3>
+      <span class="text-xs block mt-1">${player.position}</span>
+    </div>
+
+    <!-- Bottom: Player stats -->
+    <div class="absolute bottom-4 left-0 right-0 px-4">
+      <div class="grid grid-cols-3 gap-1 text-xs text-center">
+        <div>
+          <span class="font-bold">PAC</span>
+          <span class="block">${player.pace}</span>
         </div>
-        <div class="text-sm text-gray-600">
-          ${player.position} | ${player.club}
+        <div>
+          <span class="font-bold">SHO</span>
+          <span class="block">${player.shooting}</span>
+        </div>
+        <div>
+          <span class="font-bold">PAS</span>
+          <span class="block">${player.passing}</span>
+        </div>
+        <div>
+          <span class="font-bold">DRI</span>
+          <span class="block">${player.dribbling}</span>
+        </div>
+        <div>
+          <span class="font-bold">DEF</span>
+          <span class="block">${player.defending}</span>
+        </div>
+        <div>
+          <span class="font-bold">PHY</span>
+          <span class="block">${player.physical}</span>
         </div>
       </div>
-      <button class="text-red-500" onclick="removeFromSquad('${player.name}')">Remove</button>
-    `;
+    </div>
+
+    <!-- Remove Button -->
+    <button 
+      class="absolute top-2 left-2 bg-red-500 text-xs px-1 py-0.5 rounded text-white"
+      onclick="removeFromSquad('${player.name}')">
+      Remove
+    </button>
+  `;
+
   return squadCard;
 }
 
@@ -910,6 +913,7 @@ function openCustomPlayerModal() {
 
       // Add player to database and render
       playerDatabase.push(newPlayer);
+      localStorage.setItem("playerDatabase", JSON.stringify(playerDatabase));
       renderAvailablePlayers();
 
       // Close modal
