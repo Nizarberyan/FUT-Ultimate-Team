@@ -416,9 +416,12 @@ let playerDatabase = [
     positioning: 85,
   },
 ];
-if (localStorage.getItem("playerDatabase") !== null) {
+if (localStorage.getItem("playerDatabase") === "[]") {
+  localStorage.setItem("playerDatabase", JSON.stringify(playerDatabase));
+} else {
   playerDatabase = JSON.parse(localStorage.getItem("playerDatabase"));
 }
+
 //formations Database
 const formations = [
   {
@@ -499,6 +502,8 @@ function createStatBar(value, label) {
 // Function to render player cards
 function renderAvailablePlayers(searchTerm = "") {
   const playerList = document.getElementById("playerList");
+
+  // Filter players based on the search term
   const filteredPlayers = playerDatabase.filter(
     (player) =>
       player.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -511,7 +516,7 @@ function renderAvailablePlayers(searchTerm = "") {
   filteredPlayers.forEach((player) => {
     let playerCard = document.createElement("div");
     playerCard.className =
-      "border rounded-lg p-4 hover:bg-gray-50 cursor-pointer player-card";
+      "border rounded-lg p-4 hover:bg-gray-50 cursor-pointer player-card relative";
 
     // Check if player is a goalkeeper
     const isGoalkeeper = player.position === "GK";
@@ -556,8 +561,29 @@ function renderAvailablePlayers(searchTerm = "") {
           ${player.rating}
         </div>
       </div>
+      <!-- Remove Button -->
+      <button 
+        class="absolute top-2 right-2 bg-red-500 text-white text-sm px-2 py-1 rounded hover:bg-red-600 transition remove-btn"
+        title="Remove Player">
+        Remove
+      </button>
     `;
 
+    // Add "Remove" button functionality
+    playerCard.querySelector(".remove-btn").addEventListener("click", (e) => {
+      e.stopPropagation(); // Prevent triggering the card's click event
+
+      // Remove the player from the playerDatabase
+      playerDatabase = playerDatabase.filter((p) => p.name !== player.name);
+      localStorage.setItem("playerDatabase", JSON.stringify(playerDatabase));
+
+      renderSquad();
+
+      // Re-render the player list
+      renderAvailablePlayers(searchTerm);
+    });
+
+    // Add "Add to Squad" functionality to the card
     playerCard.addEventListener("click", () => addToSquad(player));
 
     playerList.appendChild(playerCard);
@@ -603,64 +629,87 @@ function addToSquad(player) {
 function createSquadCard(player) {
   let squadCard = document.createElement("div");
 
-  // Set the card's dimensions and background image
-  squadCard.className = "relative text-white rounded-lg";
-  squadCard.style.width = "252px";
-  squadCard.style.height = "350px";
-  squadCard.style.backgroundImage = `url(https://raw.githubusercontent.com/aymanebenhima/FUT-Champ-Ultimate-Team-Assets/refs/heads/main/src/assets/img/badge_ballon_dor.webp)`;
-  squadCard.style.backgroundSize = "cover";
-  squadCard.style.backgroundPosition = "center";
+  squadCard.className = "CB-5 player flex flex-col justify-center";
+
+  // Extract the player's last name
+  const playerLastName = player.name.split(" ").slice(-1)[0];
+
+  // Determine stats based on the player's position
+  const isGoalkeeper = player.position === "GK";
+  const statsHTML = isGoalkeeper
+    ? `
+      <div>
+        <span class="text-yellow-400">${player.diving}</span>
+        <span style="font-size: 8px;">DIV</span>
+      </div>
+      <div>
+        <span class="text-yellow-400">${player.handling}</span>
+        <span style="font-size: 8px;">HAN</span>
+      </div>
+      <div>
+        <span class="text-yellow-400">${player.reflexes}</span>
+        <span style="font-size: 8px;">REF</span>
+      </div>
+      <div>
+        <span class="text-yellow-400">${player.speed}</span>
+        <span style="font-size: 8px;">SPD</span>
+      </div>
+    `
+    : `
+      <div>
+        <span class="text-yellow-400">${player.physical}</span>
+        <span style="font-size: 8px;">PHY</span>
+      </div>
+      <div>
+        <span class="text-yellow-400">${player.shooting}</span>
+        <span style="font-size: 8px;">SHO</span>
+      </div>
+      <div>
+        <span class="text-yellow-400">${player.passing}</span>
+        <span style="font-size: 8px;">PAS</span>
+      </div>
+      <div>
+        <span class="text-yellow-400">${player.dribbling}</span>
+        <span style="font-size: 8px;">DRI</span>
+      </div>
+    `;
 
   squadCard.innerHTML = `
-    <!-- Top-right: Club and Nationality -->
-    <div class="absolute top-2 right-2 flex items-center space-x-1">
-      <img src="${player.flag}" alt="${player.nationality}" class="w-4 h-3">
-      <img src="${player.logo}" alt="${player.club}" class="w-4 h-4">
-    </div>
-
-    <!-- Center: Player photo and details -->
-    <div class="absolute top-16 left-1/2 transform -translate-x-1/2 text-center">
-      <img src="${player.photo}" alt="${player.name}" class="mx-auto w-12 h-12 rounded-full border border-white">
-      <h3 class="font-bold text-sm mt-1">${player.name}</h3>
-      <span class="text-xs block mt-1">${player.position}</span>
-    </div>
-
-    <!-- Bottom: Player stats -->
-    <div class="absolute bottom-4 left-0 right-0 px-4">
-      <div class="grid grid-cols-3 gap-1 text-xs text-center">
-        <div>
-          <span class="font-bold">PAC</span>
-          <span class="block">${player.pace}</span>
-        </div>
-        <div>
-          <span class="font-bold">SHO</span>
-          <span class="block">${player.shooting}</span>
-        </div>
-        <div>
-          <span class="font-bold">PAS</span>
-          <span class="block">${player.passing}</span>
-        </div>
-        <div>
-          <span class="font-bold">DRI</span>
-          <span class="block">${player.dribbling}</span>
-        </div>
-        <div>
-          <span class="font-bold">DEF</span>
-          <span class="block">${player.defending}</span>
-        </div>
-        <div>
-          <span class="font-bold">PHY</span>
-          <span class="block">${player.physical}</span>
+    <div 
+      class="relative w-[130px] h-[180px] max-sm:w-[100px] rounded-[12px] overflow-hidden shadow-lg text-white bg-cover bg-center" 
+      style="background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');">
+      
+      <!-- Delete Button -->
+      <button 
+        class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+        onclick="removeFromSquad('${player.name}')">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      
+      <!-- Player Icon -->
+      <div class="flex justify-center mt-6">
+        <img 
+          class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg" 
+          src="${player.photo}" 
+          alt="${player.name}">
+      </div>
+      
+      <!-- Player Last Name -->
+      <div 
+        class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1" 
+        id="PlayerName">
+        ${playerLastName}
+      </div>
+      
+      <!-- Player Statistics -->
+      <div class="absolute bottom-6 w-full px-3">
+        <div class="grid grid-cols-2 text-center text-xs font-bold">
+          ${statsHTML}
         </div>
       </div>
     </div>
-
-    <!-- Remove Button -->
-    <button 
-      class="absolute top-2 left-2 bg-red-500 text-xs px-1 py-0.5 rounded text-white"
-      onclick="removeFromSquad('${player.name}')">
-      Remove
-    </button>
   `;
 
   return squadCard;
@@ -679,7 +728,17 @@ function removeFromSquad(playerName) {
 
 function renderSquad() {
   squadList.innerHTML = "";
-  selectedPlayers.forEach((player) => {
+
+  // Filter selected players to include only those still in playerDatabase
+  const validPlayers = selectedPlayers.filter((player) =>
+    playerDatabase.some((dbPlayer) => dbPlayer.name === player.name)
+  );
+
+  // Update localStorage with the valid players array
+  localStorage.setItem("selectedPlayers", JSON.stringify(validPlayers));
+
+  // Update the squad list to match the valid players
+  validPlayers.forEach((player) => {
     let squadCard = createSquadCard(player);
     squadList.appendChild(squadCard);
   });

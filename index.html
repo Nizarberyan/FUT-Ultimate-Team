@@ -12,7 +12,7 @@
       #field {
         position: relative;
         background-image: url("src/assets/field.png");
-        background-size: contain;
+        background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
         width: 100%;
@@ -75,10 +75,7 @@
       <!-- Current Squad -->
       <div class="lg:col-span-3 bg-white p-6 rounded-lg shadow-lg mt-8">
         <h2 class="text-2xl font-semibold mb-4 text-gray-800">Current Squad</h2>
-        <div
-          id="squadList"
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
-        >
+        <div id="squadList" class="flex flex-wrap gap-5">
           <!-- Squad player cards go here -->
         </div>
       </div>
