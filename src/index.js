@@ -695,22 +695,13 @@ function openCustomPlayerModal() {
     "fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center overflow-y-scroll  ";
 
   const modal = document.createElement("div");
-  modal.className =
-    "bg-white w-11/12 max-w-2xl rounded-lg p-6 ";
+  modal.className = "bg-white w-11/12 max-w-2xl rounded-lg p-6 ";
 
   modal.innerHTML = `
     <button id="closeCustomPlayerModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700  ">
       Close
     </button>
     <h2 class="text-2xl font-bold mb-4 mt-16">Add Custom Player</h2>
-    
-    <div class="mb-4">
-      <label class="block mb-2">Player Type</label>
-      <select id="playerType" class="w-full border rounded p-2">
-        <option value="outfield">Outfield Player</option>
-        <option value="goalkeeper">Goalkeeper</option>
-      </select>
-    </div>
     
     <div class="grid grid-cols-2 gap-4">
       <input type="text" id="playerName" placeholder="Player Name" class="border rounded p-2" required>
@@ -731,7 +722,9 @@ function openCustomPlayerModal() {
     
     <div class="mt-4">
       <input type="text" id="playerClub" placeholder="Club" class="w-full border rounded p-2 mb-2">
+      <input type="text" id="playerClubLogo" placeholder="Club Logo URL (optional)" class="w-full border rounded p-2 mb-2">
       <input type="text" id="playerNationality" placeholder="Nationality" class="w-full border rounded p-2 mb-2">
+      <input type="text" id="playerNationalityFlag" placeholder="Nationality Flag URL (optional)" class="w-full border rounded p-2 mb-2">
       <input type="text" id="playerPhoto" placeholder="Photo URL (optional)" class="w-full border rounded p-2 mb-2">
     </div>
     
@@ -807,7 +800,6 @@ function openCustomPlayerModal() {
       Create Player
     </button>
   `;
-
   modalOverlay.appendChild(modal);
   document.body.appendChild(modalOverlay);
 
@@ -819,12 +811,12 @@ function openCustomPlayerModal() {
     });
 
   // Toggle stats based on player type
-  const playerTypeSelect = document.getElementById("playerType");
+  const playerTypeSelect = document.getElementById("playerPosition");
   const outfieldStats = document.getElementById("outfieldStats");
   const goalkeeperStats = document.getElementById("goalkeeperStats");
 
   playerTypeSelect.addEventListener("change", (e) => {
-    if (e.target.value === "goalkeeper") {
+    if (e.target.value === "GK") {
       outfieldStats.classList.add("hidden");
       goalkeeperStats.classList.remove("hidden");
     } else {
@@ -841,6 +833,7 @@ function openCustomPlayerModal() {
       document.getElementById(statId).textContent = statValue;
     });
   });
+
   // Create custom player
   document
     .getElementById("createCustomPlayer")
@@ -848,10 +841,16 @@ function openCustomPlayerModal() {
       const name = document.getElementById("playerName").value;
       const position = document.getElementById("playerPosition").value;
       const club = document.getElementById("playerClub").value;
+      const clubLogo =
+        document.getElementById("playerClubLogo").value ||
+        "https://cdn.sofifa.net/meta/team/3468/240.png";
       const nationality = document.getElementById("playerNationality").value;
+      const nationalityFlag =
+        document.getElementById("playerNationalityFlag").value ||
+        "https://cdn.sofifa.net/flags/gb-eng.png";
       const photo =
         document.getElementById("playerPhoto").value ||
-        "https://cdn.sofifa.net/players/239/085/25_120.png";
+        "https://cdn.sofifa.net/players/252/371/25_120.png";
 
       let newPlayer;
 
@@ -862,8 +861,8 @@ function openCustomPlayerModal() {
           nationality,
           club,
           photo,
-          flag: "https://cdn.sofifa.net/flags/ma.png",
-          logo: "https://cdn.sofifa.net/meta/team/placeholder/120.png",
+          flag: nationalityFlag,
+          logo: clubLogo,
           rating: Math.round(
             (parseInt(document.getElementById("divingStat").value) +
               parseInt(document.getElementById("handleStat").value) +
@@ -889,8 +888,8 @@ function openCustomPlayerModal() {
           nationality,
           club,
           photo,
-          flag: "https://cdn.sofifa.net/flags/placeholder.png",
-          logo: "https://cdn.sofifa.net/meta/team/placeholder/120.png",
+          flag: nationalityFlag,
+          logo: clubLogo,
           rating: Math.round(
             (parseInt(document.getElementById("paceStat").value) +
               parseInt(document.getElementById("shootingStat").value) +
@@ -917,7 +916,6 @@ function openCustomPlayerModal() {
       document.body.removeChild(modalOverlay);
     });
 }
-
 // Add event listener to trigger custom player modal
 document.addEventListener("DOMContentLoaded", () => {
   // Create a custom button to open the modal
