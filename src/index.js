@@ -114,7 +114,7 @@ let playerDatabase = [
   },
   {
     name: "Mohamed Salah",
-    photo: "https://cdn.sofifa.net/players/192/985/25_120.png",
+    photo: "https://cdn.sofifa.net/players/209/331/25_120.png",
     position: "RW",
     nationality: "Egypt",
     flag: "https://cdn.sofifa.net/flags/eg.png",
@@ -518,14 +518,13 @@ function createStatBar(value, label) {
     `;
 }
 
-
 renderAvailablePlayers();
 document.getElementById("playerSearch").addEventListener("input", (e) => {
   renderAvailablePlayers(e.target.value);
 });
 
 const squadList = document.getElementById("squadList");
-console.log(playerList);
+
 // Function to create a player stats bar
 function createStatBar(value, label) {
   return `
@@ -601,7 +600,6 @@ function renderAvailablePlayers(searchTerm = "") {
       </div>
     `;
 
-   
     playerCard.addEventListener("click", () => addToSquad(player));
 
     playerList.appendChild(playerCard);
@@ -637,7 +635,6 @@ function addToSquad(player) {
     // Append the new squad card to the list
     squadList.appendChild(squadCard);
 
-    
     localStorage.setItem("selectedPlayers", JSON.stringify(selectedPlayers));
   } else {
     alert("You cannot add more than 11 players to the squad.");
@@ -677,11 +674,9 @@ function removeFromSquad(playerName) {
   renderSquad();
 }
 
-// Function to render the squad list
 function renderSquad() {
-  squadList.innerHTML = ""; // Clear the squad list
+  squadList.innerHTML = "";
   selectedPlayers.forEach((player) => {
-    // Create and append squad cards for all players in the squad
     let squadCard = createSquadCard(player);
     squadList.appendChild(squadCard);
   });
@@ -690,4 +685,250 @@ function renderSquad() {
 // Initial rendering of the squad
 renderSquad();
 
+// Add this to the existing index.js file
 
+// Function to open the custom player modal
+function openCustomPlayerModal() {
+  const modalOverlay = document.createElement("div");
+  modalOverlay.id = "customPlayerModalOverlay";
+  modalOverlay.className =
+    "fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center overflow-y-scroll  ";
+
+  const modal = document.createElement("div");
+  modal.className =
+    "bg-white w-11/12 max-w-2xl rounded-lg p-6 ";
+
+  modal.innerHTML = `
+    <button id="closeCustomPlayerModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700  ">
+      Close
+    </button>
+    <h2 class="text-2xl font-bold mb-4 mt-20">Create Custom Player</h2>
+    
+    <div class="mb-4">
+      <label class="block mb-2">Player Type</label>
+      <select id="playerType" class="w-full border rounded p-2">
+        <option value="outfield">Outfield Player</option>
+        <option value="goalkeeper">Goalkeeper</option>
+      </select>
+    </div>
+    
+    <div class="grid grid-cols-2 gap-4">
+      <input type="text" id="playerName" placeholder="Player Name" class="border rounded p-2" required>
+      <select id="playerPosition" class="border rounded p-2">
+        <option value="">Select Position</option>
+        <option value="ST">Striker (ST)</option>
+        <option value="LW">Left Wing (LW)</option>
+        <option value="RW">Right Wing (RW)</option>
+        <option value="CM">Central Midfielder (CM)</option>
+        <option value="CDM">Defensive Midfielder (CDM)</option>
+        <option value="CAM">Attacking Midfielder (CAM)</option>
+        <option value="LB">Left Back (LB)</option>
+        <option value="RB">Right Back (RB)</option>
+        <option value="CB">Center Back (CB)</option>
+        <option value="GK">Goalkeeper (GK)</option>
+      </select>
+    </div>
+    
+    <div class="mt-4">
+      <input type="text" id="playerClub" placeholder="Club" class="w-full border rounded p-2 mb-2">
+      <input type="text" id="playerNationality" placeholder="Nationality" class="w-full border rounded p-2 mb-2">
+      <input type="text" id="playerPhoto" placeholder="Photo URL (optional)" class="w-full border rounded p-2 mb-2">
+    </div>
+    
+    <div id="statsContainer" class="mt-4 grid grid-cols-2 gap-4">
+      <div id="outfieldStats">
+        <div class="mb-2">
+          <label>Pace</label>
+          <input type="range" id="paceStat" min="0" max="99" value="50" class="w-full">
+          <span id="paceValue">50</span>
+        </div>
+        <div class="mb-2">
+          <label>Shooting</label>
+          <input type="range" id="shootingStat" min="0" max="99" value="50" class="w-full">
+          <span id="shootingValue">50</span>
+        </div>
+        <div class="mb-2">
+          <label>Passing</label>
+          <input type="range" id="passingStat" min="0" max="99" value="50" class="w-full">
+          <span id="passingValue">50</span>
+        </div>
+        <div class="mb-2">
+          <label>Dribbling</label>
+          <input type="range" id="dribblingSTat" min="0" max="99" value="50" class="w-full">
+          <span id="dribblingValue">50</span>
+        </div>
+        <div class="mb-2">
+          <label>Defending</label>
+          <input type="range" id="defendingStat" min="0" max="99" value="50" class="w-full">
+          <span id="defendingValue">50</span>
+        </div>
+        <div class="mb-2">
+          <label>Physical</label>
+          <input type="range" id="physicalStat" min="0" max="99" value="50" class="w-full">
+          <span id="physicalValue">50</span>
+        </div>
+      </div>
+      
+      <div id="goalkeeperStats" class="hidden">
+        <div class="mb-2">
+          <label>Diving</label>
+          <input type="range" id="divingStat" min="0" max="99" value="50" class="w-full">
+          <span id="divingValue">50</span>
+        </div>
+        <div class="mb-2">
+          <label>Handling</label>
+          <input type="range" id="handleStat" min="0" max="99" value="50" class="w-full">
+          <span id="handleValue">50</span>
+        </div>
+        <div class="mb-2">
+          <label>Kicking</label>
+          <input type="range" id="kickingStat" min="0" max="99" value="50" class="w-full">
+          <span id="kickingValue">50</span>
+        </div>
+        <div class="mb-2">
+          <label>Reflexes</label>
+          <input type="range" id="reflexesStat" min="0" max="99" value="50" class="w-full">
+          <span id="reflexesValue">50</span>
+        </div>
+        <div class="mb-2">
+          <label>Speed</label>
+          <input type="range" id="speedStat" min="0" max="99" value="50" class="w-full">
+          <span id="speedValue">50</span>
+        </div>
+        <div class="mb-2">
+          <label>Positioning</label>
+          <input type="range" id="positioningStat" min="0" max="99" value="50" class="w-full">
+          <span id="positioningValue">50</span>
+        </div>
+      </div>
+    </div>
+    
+    <button id="createCustomPlayer" class="mt-4 w-full bg-green-500 text-white p-2 rounded hover:bg-green-600">
+      Create Player
+    </button>
+  `;
+
+  modalOverlay.appendChild(modal);
+  document.body.appendChild(modalOverlay);
+
+  // Close modal functionality
+  document
+    .getElementById("closeCustomPlayerModal")
+    .addEventListener("click", () => {
+      document.body.removeChild(modalOverlay);
+    });
+
+  // Toggle stats based on player type
+  const playerTypeSelect = document.getElementById("playerType");
+  const outfieldStats = document.getElementById("outfieldStats");
+  const goalkeeperStats = document.getElementById("goalkeeperStats");
+
+  playerTypeSelect.addEventListener("change", (e) => {
+    if (e.target.value === "goalkeeper") {
+      outfieldStats.classList.add("hidden");
+      goalkeeperStats.classList.remove("hidden");
+    } else {
+      outfieldStats.classList.remove("hidden");
+      goalkeeperStats.classList.add("hidden");
+    }
+  });
+
+  // Add live stat value display
+  document.querySelectorAll("input[type='range']").forEach((rangeInput) => {
+    rangeInput.addEventListener("change", (e) => {
+      const statValue = e.target.value;
+      const statId = e.target.id.replace("Stat", "Value");
+      document.getElementById(statId).textContent = statValue;
+    });
+  });
+  // Create custom player
+  document
+    .getElementById("createCustomPlayer")
+    .addEventListener("click", () => {
+      const name = document.getElementById("playerName").value;
+      const position = document.getElementById("playerPosition").value;
+      const club = document.getElementById("playerClub").value;
+      const nationality = document.getElementById("playerNationality").value;
+      const photo =
+        document.getElementById("playerPhoto").value ||
+        "https://cdn.sofifa.net/players/239/085/25_120.png";
+
+      let newPlayer;
+
+      if (position === "GK") {
+        newPlayer = {
+          name,
+          position,
+          nationality,
+          club,
+          photo,
+          flag: "https://cdn.sofifa.net/flags/ma.png",
+          logo: "https://cdn.sofifa.net/meta/team/placeholder/120.png",
+          rating: Math.round(
+            (parseInt(document.getElementById("divingStat").value) +
+              parseInt(document.getElementById("handleStat").value) +
+              parseInt(document.getElementById("kickingStat").value) +
+              parseInt(document.getElementById("reflexesStat").value) +
+              parseInt(document.getElementById("speedStat").value) +
+              parseInt(document.getElementById("positioningStat").value)) /
+              6
+          ),
+          diving: parseInt(document.getElementById("divingStat").value),
+          handling: parseInt(document.getElementById("handleStat").value),
+          kicking: parseInt(document.getElementById("kickingStat").value),
+          reflexes: parseInt(document.getElementById("reflexesStat").value),
+          speed: parseInt(document.getElementById("speedStat").value),
+          positioning: parseInt(
+            document.getElementById("positioningStat").value
+          ),
+        };
+      } else {
+        newPlayer = {
+          name,
+          position,
+          nationality,
+          club,
+          photo,
+          flag: "https://cdn.sofifa.net/flags/placeholder.png",
+          logo: "https://cdn.sofifa.net/meta/team/placeholder/120.png",
+          rating: Math.round(
+            (parseInt(document.getElementById("paceStat").value) +
+              parseInt(document.getElementById("shootingStat").value) +
+              parseInt(document.getElementById("passingStat").value) +
+              parseInt(document.getElementById("dribblingSTat").value) +
+              parseInt(document.getElementById("defendingStat").value) +
+              parseInt(document.getElementById("physicalStat").value)) /
+              6
+          ),
+          pace: parseInt(document.getElementById("paceStat").value),
+          shooting: parseInt(document.getElementById("shootingStat").value),
+          passing: parseInt(document.getElementById("passingStat").value),
+          dribbling: parseInt(document.getElementById("dribblingSTat").value),
+          defending: parseInt(document.getElementById("defendingStat").value),
+          physical: parseInt(document.getElementById("physicalStat").value),
+        };
+      }
+
+      // Add player to database and render
+      playerDatabase.push(newPlayer);
+      renderAvailablePlayers();
+
+      // Close modal
+      document.body.removeChild(modalOverlay);
+    });
+}
+
+// Add event listener to trigger custom player modal
+document.addEventListener("DOMContentLoaded", () => {
+  // Create a custom button to open the modal
+  const customPlayerBtn = document.createElement("button");
+  customPlayerBtn.innerHTML =
+    "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' width='12' height='12' x='0' y='0' viewBox='0 0 448 448' style='enable-background:new 0 0 512 512' xml:space='preserve' class=''><g><path d='M408 184H272a8 8 0 0 1-8-8V40c0-22.09-17.91-40-40-40s-40 17.91-40 40v136a8 8 0 0 1-8 8H40c-22.09 0-40 17.91-40 40s17.91 40 40 40h136a8 8 0 0 1 8 8v136c0 22.09 17.91 40 40 40s40-17.91 40-40V272a8 8 0 0 1 8-8h136c22.09 0 40-17.91 40-40s-17.91-40-40-40zm0 0' fill='#FFFFFF' opacity='1' data-original='#FFFFFF' class=''></path></g></svg> Custom Player";
+  customPlayerBtn.className =
+    "bg-green-500 text-white p-2 rounded ml-2 hover:bg-green-600 flex items-center gap-2";
+  customPlayerBtn.addEventListener("click", openCustomPlayerModal);
+
+  // Add the button next to the search input
+  const searchContainer = document.querySelector("#playerSearch").parentNode;
+  searchContainer.appendChild(customPlayerBtn);
+});
