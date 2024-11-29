@@ -423,36 +423,6 @@ if (localStorage.getItem("playerDatabase") === "[]") {
 }
 
 //formations Database
-const formations = [
-  {
-    "4-4-2": {
-      GK: { x: 50, y: 90 },
-      LB: { x: 20, y: 70 },
-      CB1: { x: 35, y: 70 },
-      CB2: { x: 65, y: 70 },
-      RB: { x: 80, y: 70 },
-      LM: { x: 20, y: 45 },
-      CM1: { x: 35, y: 45 },
-      CM2: { x: 65, y: 45 },
-      RM: { x: 80, y: 45 },
-      ST1: { x: 35, y: 20 },
-      ST2: { x: 65, y: 20 },
-    },
-    "4-3-3": {
-      GK: { x: 50, y: 90 },
-      LB: { x: 20, y: 70 },
-      CB1: { x: 35, y: 70 },
-      CB2: { x: 65, y: 70 },
-      RB: { x: 80, y: 70 },
-      CM1: { x: 35, y: 45 },
-      CM2: { x: 50, y: 45 },
-      CM3: { x: 65, y: 45 },
-      LW: { x: 20, y: 20 },
-      ST: { x: 50, y: 20 },
-      RW: { x: 80, y: 20 },
-    },
-  },
-];
 
 //Formation state
 let state = {
@@ -465,6 +435,22 @@ document.getElementById("chemistry").textContent = state.chemistry;
 let playerList = document.getElementById("playerList");
 
 let selectFormation = document.getElementById("formation");
+if (selectFormation.value === "4-4-2") {
+  document.getElementById("formation433").classList.add("hidden");
+  document.getElementById("formation442").classList.remove("hidden");
+} else if (selectFormation.value === "4-3-3") {
+  document.getElementById("formation442").classList.add("hidden");
+  document.getElementById("formation433").classList.remove("hidden");
+}
+selectFormation.addEventListener("change", (e) => {
+  if (selectFormation.value === "4-4-2") {
+    document.getElementById("formation433").classList.add("hidden");
+    document.getElementById("formation442").classList.remove("hidden");
+  } else if (selectFormation.value === "4-3-3") {
+    document.getElementById("formation442").classList.add("hidden");
+    document.getElementById("formation433").classList.remove("hidden");
+  }
+});
 
 // Function to create a player stats bar
 function createStatBar(value, label) {
@@ -563,6 +549,11 @@ function renderAvailablePlayers(searchTerm = "") {
       </div>
       <!-- Remove Button -->
       <button 
+        class="absolute top-2 right-16 bg-blue-500 text-white text-sm px-2 py-1 rounded hover:bg-blue-600 transition edit-btn"
+        title="Edit Player">
+        Edit
+      </button>
+      <button 
         class="absolute top-2 right-2 bg-red-500 text-white text-sm px-2 py-1 rounded hover:bg-red-600 transition remove-btn"
         title="Remove Player">
         Remove
@@ -583,12 +574,100 @@ function renderAvailablePlayers(searchTerm = "") {
       renderAvailablePlayers(searchTerm);
     });
 
+    // Add "Edit" button functionality
+    playerCard.querySelector(".edit-btn").addEventListener("click", (e) => {
+      e.stopPropagation(); // Prevent triggering the card's click event
+      openEditModal(player);
+    });
+
     // Add "Add to Squad" functionality to the card
     playerCard.addEventListener("click", () => addToSquad(player));
 
     playerList.appendChild(playerCard);
   });
 }
+
+// Open Edit Modal
+function openEditModal(player) {
+  const modal = document.getElementById("editPlayerModal");
+  modal.classList.remove("hidden");
+
+  // Populate the form with player data
+  document.getElementById("editName").value = player.name;
+  document.getElementById("editClub").value = player.club;
+  document.getElementById("editNationality").value = player.nationality;
+  document.getElementById("editPosition").value = player.position;
+  document.getElementById("editRating").value = player.rating;
+
+  // Save changes
+  document.getElementById("savePlayerBtn").onclick = () => {
+    player.name = document.getElementById("editName").value;
+    player.club = document.getElementById("editClub").value;
+    player.nationality = document.getElementById("editNationality").value;
+    player.position = document.getElementById("editPosition").value;
+    player.rating = parseInt(document.getElementById("editRating").value, 10);
+
+    // Update player in the database
+    localStorage.setItem("playerDatabase", JSON.stringify(playerDatabase));
+
+    // Re-render players
+    renderAvailablePlayers();
+
+    // Close the modal
+    modal.classList.add("hidden");
+  };
+}
+
+// Close modal
+// Dynamically create and insert the modal into the DOM
+function createEditPlayerModal() {
+  const modalHTML = `
+    <div id="editPlayerModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50">
+      <div class="bg-white p-6 rounded-lg shadow-lg w-80">
+        <h2 class="text-xl font-bold mb-4">Edit Player</h2>
+        <div class="space-y-4">
+          <div>
+            <label for="editName" class="block text-sm font-medium">Name</label>
+            <input type="text" id="editName" class="w-full border p-2 rounded">
+          </div>
+          <div>
+            <label for="editClub" class="block text-sm font-medium">Club</label>
+            <input type="text" id="editClub" class="w-full border p-2 rounded">
+          </div>
+          <div>
+            <label for="editNationality" class="block text-sm font-medium">Nationality</label>
+            <input type="text" id="editNationality" class="w-full border p-2 rounded">
+          </div>
+          <div>
+            <label for="editPosition" class="block text-sm font-medium">Position</label>
+            <input type="text" id="editPosition" class="w-full border p-2 rounded">
+          </div>
+          <div>
+            <label for="editRating" class="block text-sm font-medium">Rating</label>
+            <input type="number" id="editRating" class="w-full border p-2 rounded">
+          </div>
+        </div>
+        <div class="mt-6 flex justify-end space-x-4">
+          <button id="closeModalBtn" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+          <button id="savePlayerBtn" class="px-4 py-2 bg-blue-500 text-white rounded">Save</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Append the modal HTML to the body
+  const modalContainer = document.createElement("div");
+  modalContainer.innerHTML = modalHTML;
+  document.body.appendChild(modalContainer);
+
+  // Add functionality to close the modal
+  document.getElementById("closeModalBtn").addEventListener("click", () => {
+    document.getElementById("editPlayerModal").classList.add("hidden");
+  });
+}
+
+// Call the function to create the modal when the page loads
+createEditPlayerModal();
 
 renderAvailablePlayers();
 
@@ -993,3 +1072,124 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchContainer = document.querySelector("#playerSearch").parentNode;
   searchContainer.appendChild(customPlayerBtn);
 });
+
+// Update the formations database to include explicit position mappings
+const formations = [
+  {
+    "4-4-2": {
+      GK: { x: 50, y: 90 },
+      LB: { x: 20, y: 70 },
+      CB1: { x: 35, y: 70 },
+      CB2: { x: 65, y: 70 },
+      RB: { x: 80, y: 70 },
+      LM: { x: 20, y: 45 },
+      CM1: { x: 35, y: 45 },
+      CM2: { x: 65, y: 45 },
+      RM: { x: 80, y: 45 },
+      ST1: { x: 35, y: 20 },
+      ST2: { x: 65, y: 20 },
+    },
+    "4-3-3": {
+      GK: { x: 50, y: 90 },
+      LB: { x: 20, y: 70 },
+      CB1: { x: 35, y: 70 },
+      CB2: { x: 65, y: 70 },
+      RB: { x: 80, y: 70 },
+      CM1: { x: 35, y: 45 },
+      CM2: { x: 50, y: 45 },
+      CM3: { x: 65, y: 45 },
+      LW: { x: 20, y: 20 },
+      ST: { x: 50, y: 20 },
+      RW: { x: 80, y: 20 },
+    },
+  },
+];
+
+// Function to get the appropriate position for a player in a given formation
+// References to elements
+const field = document.getElementById("field");
+const formationSelect = document.getElementById("formation");
+
+// Track field positions
+let fieldPositions = {};
+
+// Handle placing players on the field
+function addToField(player) {
+  // Get the selected formation
+  const formation = formationSelect.value;
+  const positions = formations[formation];
+
+  // Find an available position for the player's role
+  const playerRole = player.position;
+  const availablePosition = Object.keys(positions).find(
+    (pos) => pos.startsWith(playerRole) && !fieldPositions[pos] // Matches role and is unoccupied
+  );
+
+  if (!availablePosition) {
+    alert("No available position for this player in the current formation.");
+    return;
+  }
+
+  // Mark position as occupied
+  fieldPositions[availablePosition] = player;
+
+  // Create a card for the player
+  const playerCard = document.createElement("div");
+  playerCard.className =
+    "absolute w-[130px] h-[180px] rounded-[12px] overflow-hidden shadow-lg text-white bg-cover bg-center";
+  playerCard.style.backgroundImage =
+    "url('src/assets/badge_ballon_dor-removebg-preview.png')";
+  playerCard.style.left = `${positions[availablePosition].x}%`;
+  playerCard.style.top = `${positions[availablePosition].y}%`;
+  playerCard.style.transform = "translate(-50%, -50%)";
+
+  playerCard.innerHTML = `
+    <div class="flex justify-center mt-6">
+      <img 
+        class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg" 
+        src="${player.photo}" 
+        alt="${player.name}">
+    </div>
+    <div class="text-center font-bold text-sm mt-2">${
+      player.name.split(" ").slice(-1)[0]
+    }</div>
+    <div class="grid grid-cols-2 text-center text-xs font-bold mt-2">
+      <div>
+        <span class="text-yellow-400">${player.physical}</span>
+        <span style="font-size: 8px;">PHY</span>
+      </div>
+      <div>
+        <span class="text-yellow-400">${player.shooting}</span>
+        <span style="font-size: 8px;">SHO</span>
+      </div>
+      <div>
+        <span class="text-yellow-400">${player.passing}</span>
+        <span style="font-size: 8px;">PAS</span>
+      </div>
+      <div>
+        <span class="text-yellow-400">${player.dribbling}</span>
+        <span style="font-size: 8px;">DRI</span>
+      </div>
+    </div>
+    <button 
+      class="absolute top-1 right-1 bg-red-500 text-white text-xs px-2 py-1 rounded hover:bg-red-600 transition"
+      onclick="removeFromField('${availablePosition}')">
+      Remove
+    </button>
+  `;
+
+  // Add the card to the field
+  field.appendChild(playerCard);
+}
+
+// Remove a player from the field
+function removeFromField(position) {
+  // Remove the player card from the DOM
+  const playerCard = field.querySelector(`[data-position="${position}"]`);
+  if (playerCard) playerCard.remove();
+
+  // Free the position
+  delete fieldPositions[position];
+}
+
+// Update player card on click to add to field

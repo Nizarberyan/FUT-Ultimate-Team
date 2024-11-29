@@ -16,7 +16,7 @@
         background-repeat: no-repeat;
         background-position: center;
         width: 100%;
-        aspect-ratio: 1180 / 1072; /* Matches the image dimensions */
+        aspect-ratio: 1180 / 1072;
         border-radius: 15px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         overflow: hidden;
@@ -67,7 +67,1429 @@
         <!-- Soccer Field -->
         <div class="col-span-2">
           <div id="field">
-            <!-- Player cards go here -->
+            <div
+              class="GoalK player flex flex-col justify-center absolute top-[74%] right-[43%]"
+            >
+              <div
+                class="relative w-[130px] h-[180px] max-sm:w-[100px] overflow-hidden text-white bg-cover bg-center"
+                style="
+                  background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');
+                "
+              >
+                <!-- Delete Button -->
+                <button
+                  class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+
+                <!-- Player Icon -->
+                <div class="flex justify-center mt-6">
+                  <img
+                    class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg"
+                  />
+                </div>
+
+                <!-- Player Last Name -->
+                <div
+                  class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1"
+                  id="PlayerName"
+                >
+                  Beriane
+                </div>
+
+                <!-- Player Statistics -->
+                <div class="absolute bottom-6 w-full px-3">
+                  <div class="grid grid-cols-2 text-center text-xs font-bold">
+                    <div>
+                      <span class="text-yellow-400">20</span>
+                      <span style="font-size: 8px">PHY</span>
+                    </div>
+                    <div>
+                      <span class="text-yellow-400">20</span>
+                      <span style="font-size: 8px">SHO</span>
+                    </div>
+                    <div>
+                      <span class="text-yellow-400">20</span>
+                      <span style="font-size: 8px">PAS</span>
+                    </div>
+                    <div>
+                      <span class="text-yellow-400">20</span>
+                      <span style="font-size: 8px">DRI</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="formation433" class="hidden">
+              <div class="Attack flex items-center justify-around">
+                <div class="LeftW player flex flex-col justify-center">
+                  <div
+                    class="relative w-[130px] h-[180px] max-sm:w-[100px] overflow-hidden text-white bg-cover bg-center"
+                    style="
+                      background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');
+                    "
+                  >
+                    <!-- Delete Button -->
+                    <button
+                      class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+
+                    <!-- Player Icon -->
+                    <div class="flex justify-center mt-6">
+                      <img
+                        class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg"
+                      />
+                    </div>
+
+                    <!-- Player Last Name -->
+                    <div
+                      class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1"
+                      id="PlayerName"
+                    >
+                      Beriane
+                    </div>
+
+                    <!-- Player Statistics -->
+                    <div class="absolute bottom-6 w-full px-3">
+                      <div
+                        class="grid grid-cols-2 text-center text-xs font-bold"
+                      >
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PHY</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">SHO</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PAS</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">DRI</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="Stiker player flex flex-col justify-center">
+                  <div
+                    class="relative w-[130px] h-[180px] max-sm:w-[100px] overflow-hidden text-white bg-cover bg-center"
+                    style="
+                      background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');
+                    "
+                  >
+                    <!-- Delete Button -->
+                    <button
+                      class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+
+                    <!-- Player Icon -->
+                    <div class="flex justify-center mt-6">
+                      <img
+                        class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg"
+                      />
+                    </div>
+
+                    <!-- Player Last Name -->
+                    <div
+                      class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1"
+                      id="PlayerName"
+                    >
+                      Beriane
+                    </div>
+
+                    <!-- Player Statistics -->
+                    <div class="absolute bottom-6 w-full px-3">
+                      <div
+                        class="grid grid-cols-2 text-center text-xs font-bold"
+                      >
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PHY</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">SHO</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PAS</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">DRI</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="RightW player flex flex-col justify-center">
+                  <div
+                    class="relative w-[130px] h-[180px] max-sm:w-[100px] overflow-hidden text-white bg-cover bg-center"
+                    style="
+                      background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');
+                    "
+                  >
+                    <!-- Delete Button -->
+                    <button
+                      class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+
+                    <!-- Player Icon -->
+                    <div class="flex justify-center mt-6">
+                      <img
+                        class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg"
+                      />
+                    </div>
+
+                    <!-- Player Last Name -->
+                    <div
+                      class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1"
+                      id="PlayerName"
+                    >
+                      Beriane
+                    </div>
+
+                    <!-- Player Statistics -->
+                    <div class="absolute bottom-6 w-full px-3">
+                      <div
+                        class="grid grid-cols-2 text-center text-xs font-bold"
+                      >
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PHY</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">SHO</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PAS</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">DRI</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="Midfield flex items-center justify-around">
+                <div class="LeftM player flex flex-col justify-center">
+                  <div
+                    class="relative w-[130px] h-[180px] max-sm:w-[100px] overflow-hidden text-white bg-cover bg-center"
+                    style="
+                      background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');
+                    "
+                  >
+                    <!-- Delete Button -->
+                    <button
+                      class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+
+                    <!-- Player Icon -->
+                    <div class="flex justify-center mt-6">
+                      <img
+                        class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg"
+                      />
+                    </div>
+
+                    <!-- Player Last Name -->
+                    <div
+                      class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1"
+                      id="PlayerName"
+                    >
+                      Beriane
+                    </div>
+
+                    <!-- Player Statistics -->
+                    <div class="absolute bottom-6 w-full px-3">
+                      <div
+                        class="grid grid-cols-2 text-center text-xs font-bold"
+                      >
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PHY</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">SHO</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PAS</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">DRI</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="CenterM player flex flex-col justify-center">
+                  <div
+                    class="relative w-[130px] h-[180px] max-sm:w-[100px] overflow-hidden text-white bg-cover bg-center"
+                    style="
+                      background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');
+                    "
+                  >
+                    <!-- Delete Button -->
+                    <button
+                      class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+
+                    <!-- Player Icon -->
+                    <div class="flex justify-center mt-6">
+                      <img
+                        class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg"
+                      />
+                    </div>
+
+                    <!-- Player Last Name -->
+                    <div
+                      class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1"
+                      id="PlayerName"
+                    >
+                      Beriane
+                    </div>
+
+                    <!-- Player Statistics -->
+                    <div class="absolute bottom-6 w-full px-3">
+                      <div
+                        class="grid grid-cols-2 text-center text-xs font-bold"
+                      >
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PHY</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">SHO</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PAS</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">DRI</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="RightM player flex flex-col justify-center">
+                  <div
+                    class="relative w-[130px] h-[180px] max-sm:w-[100px] overflow-hidden text-white bg-cover bg-center"
+                    style="
+                      background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');
+                    "
+                  >
+                    <!-- Delete Button -->
+                    <button
+                      class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+
+                    <!-- Player Icon -->
+                    <div class="flex justify-center mt-6">
+                      <img
+                        class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg"
+                      />
+                    </div>
+
+                    <!-- Player Last Name -->
+                    <div
+                      class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1"
+                      id="PlayerName"
+                    >
+                      Beriane
+                    </div>
+
+                    <!-- Player Statistics -->
+                    <div class="absolute bottom-6 w-full px-3">
+                      <div
+                        class="grid grid-cols-2 text-center text-xs font-bold"
+                      >
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PHY</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">SHO</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PAS</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">DRI</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="Defence flex items-center justify-around">
+                <div class="LeftB player flex flex-col justify-center">
+                  <div
+                    class="relative w-[130px] h-[180px] max-sm:w-[100px] overflow-hidden text-white bg-cover bg-center"
+                    style="
+                      background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');
+                    "
+                  >
+                    <!-- Delete Button -->
+                    <button
+                      class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+
+                    <!-- Player Icon -->
+                    <div class="flex justify-center mt-6">
+                      <img
+                        class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg"
+                      />
+                    </div>
+
+                    <!-- Player Last Name -->
+                    <div
+                      class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1"
+                      id="PlayerName"
+                    >
+                      Beriane
+                    </div>
+
+                    <!-- Player Statistics -->
+                    <div class="absolute bottom-6 w-full px-3">
+                      <div
+                        class="grid grid-cols-2 text-center text-xs font-bold"
+                      >
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PHY</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">SHO</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PAS</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">DRI</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="CenterB1 player flex flex-col justify-center">
+                  <div
+                    class="relative w-[130px] h-[180px] max-sm:w-[100px] overflow-hidden text-white bg-cover bg-center"
+                    style="
+                      background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');
+                    "
+                  >
+                    <!-- Delete Button -->
+                    <button
+                      class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+
+                    <!-- Player Icon -->
+                    <div class="flex justify-center mt-6">
+                      <img
+                        class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg"
+                      />
+                    </div>
+
+                    <!-- Player Last Name -->
+                    <div
+                      class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1"
+                      id="PlayerName"
+                    >
+                      Beriane
+                    </div>
+
+                    <!-- Player Statistics -->
+                    <div class="absolute bottom-6 w-full px-3">
+                      <div
+                        class="grid grid-cols-2 text-center text-xs font-bold"
+                      >
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PHY</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">SHO</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PAS</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">DRI</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="CenterB2 player flex flex-col justify-center">
+                  <div
+                    class="relative w-[130px] h-[180px] max-sm:w-[100px] overflow-hidden text-white bg-cover bg-center"
+                    style="
+                      background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');
+                    "
+                  >
+                    <!-- Delete Button -->
+                    <button
+                      class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+
+                    <!-- Player Icon -->
+                    <div class="flex justify-center mt-6">
+                      <img
+                        class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg"
+                      />
+                    </div>
+
+                    <!-- Player Last Name -->
+                    <div
+                      class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1"
+                      id="PlayerName"
+                    >
+                      Beriane
+                    </div>
+
+                    <!-- Player Statistics -->
+                    <div class="absolute bottom-6 w-full px-3">
+                      <div
+                        class="grid grid-cols-2 text-center text-xs font-bold"
+                      >
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PHY</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">SHO</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PAS</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">DRI</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="RightB player flex flex-col justify-center">
+                  <div
+                    class="relative w-[130px] h-[180px] max-sm:w-[100px] overflow-hidden text-white bg-cover bg-center"
+                    style="
+                      background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');
+                    "
+                  >
+                    <!-- Delete Button -->
+                    <button
+                      class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+
+                    <!-- Player Icon -->
+                    <div class="flex justify-center mt-6">
+                      <img
+                        class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg"
+                      />
+                    </div>
+
+                    <!-- Player Last Name -->
+                    <div
+                      class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1"
+                      id="PlayerName"
+                    >
+                      Beriane
+                    </div>
+
+                    <!-- Player Statistics -->
+                    <div class="absolute bottom-6 w-full px-3">
+                      <div
+                        class="grid grid-cols-2 text-center text-xs font-bold"
+                      >
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PHY</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">SHO</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PAS</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">DRI</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="formation442" class="hidden">
+              <div class="Attack flex items-center justify-around">
+                <div class="Striker2 player flex flex-col justify-center">
+                  <div
+                    class="relative w-[130px] h-[180px] max-sm:w-[100px] overflow-hidden text-white bg-cover bg-center"
+                    style="
+                      background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');
+                    "
+                  >
+                    <!-- Delete Button -->
+                    <button
+                      class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+
+                    <!-- Player Icon -->
+                    <div class="flex justify-center mt-6">
+                      <img
+                        class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg"
+                      />
+                    </div>
+
+                    <!-- Player Last Name -->
+                    <div
+                      class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1"
+                      id="PlayerName"
+                    >
+                      Beriane
+                    </div>
+
+                    <!-- Player Statistics -->
+                    <div class="absolute bottom-6 w-full px-3">
+                      <div
+                        class="grid grid-cols-2 text-center text-xs font-bold"
+                      >
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PHY</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">SHO</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PAS</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">DRI</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="Stiker1 player flex flex-col justify-center">
+                  <div
+                    class="relative w-[130px] h-[180px] max-sm:w-[100px] overflow-hidden text-white bg-cover bg-center"
+                    style="
+                      background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');
+                    "
+                  >
+                    <!-- Delete Button -->
+                    <button
+                      class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+
+                    <!-- Player Icon -->
+                    <div class="flex justify-center mt-6">
+                      <img
+                        class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg"
+                      />
+                    </div>
+
+                    <!-- Player Last Name -->
+                    <div
+                      class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1"
+                      id="PlayerName"
+                    >
+                      Beriane
+                    </div>
+
+                    <!-- Player Statistics -->
+                    <div class="absolute bottom-6 w-full px-3">
+                      <div
+                        class="grid grid-cols-2 text-center text-xs font-bold"
+                      >
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PHY</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">SHO</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PAS</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">DRI</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="Midfield flex items-center justify-around">
+                <div class="LeftM player flex flex-col justify-center">
+                  <div
+                    class="relative w-[130px] h-[180px] max-sm:w-[100px] overflow-hidden text-white bg-cover bg-center"
+                    style="
+                      background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');
+                    "
+                  >
+                    <!-- Delete Button -->
+                    <button
+                      class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+
+                    <!-- Player Icon -->
+                    <div class="flex justify-center mt-6">
+                      <img
+                        class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg"
+                      />
+                    </div>
+
+                    <!-- Player Last Name -->
+                    <div
+                      class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1"
+                      id="PlayerName"
+                    >
+                      Beriane
+                    </div>
+
+                    <!-- Player Statistics -->
+                    <div class="absolute bottom-6 w-full px-3">
+                      <div
+                        class="grid grid-cols-2 text-center text-xs font-bold"
+                      >
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PHY</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">SHO</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PAS</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">DRI</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="CenterM1 player flex flex-col justify-center">
+                  <div
+                    class="relative w-[130px] h-[180px] max-sm:w-[100px] overflow-hidden text-white bg-cover bg-center"
+                    style="
+                      background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');
+                    "
+                  >
+                    <!-- Delete Button -->
+                    <button
+                      class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+
+                    <!-- Player Icon -->
+                    <div class="flex justify-center mt-6">
+                      <img
+                        class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg"
+                      />
+                    </div>
+
+                    <!-- Player Last Name -->
+                    <div
+                      class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1"
+                      id="PlayerName"
+                    >
+                      Beriane
+                    </div>
+
+                    <!-- Player Statistics -->
+                    <div class="absolute bottom-6 w-full px-3">
+                      <div
+                        class="grid grid-cols-2 text-center text-xs font-bold"
+                      >
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PHY</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">SHO</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PAS</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">DRI</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="CenterM2 player flex flex-col justify-center">
+                  <div
+                    class="relative w-[130px] h-[180px] max-sm:w-[100px] overflow-hidden text-white bg-cover bg-center"
+                    style="
+                      background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');
+                    "
+                  >
+                    <!-- Delete Button -->
+                    <button
+                      class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+
+                    <!-- Player Icon -->
+                    <div class="flex justify-center mt-6">
+                      <img
+                        class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg"
+                      />
+                    </div>
+
+                    <!-- Player Last Name -->
+                    <div
+                      class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1"
+                      id="PlayerName"
+                    >
+                      Beriane
+                    </div>
+
+                    <!-- Player Statistics -->
+                    <div class="absolute bottom-6 w-full px-3">
+                      <div
+                        class="grid grid-cols-2 text-center text-xs font-bold"
+                      >
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PHY</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">SHO</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PAS</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">DRI</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="RightM player flex flex-col justify-center">
+                  <div
+                    class="relative w-[130px] h-[180px] max-sm:w-[100px] overflow-hidden text-white bg-cover bg-center"
+                    style="
+                      background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');
+                    "
+                  >
+                    <!-- Delete Button -->
+                    <button
+                      class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+
+                    <!-- Player Icon -->
+                    <div class="flex justify-center mt-6">
+                      <img
+                        class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg"
+                      />
+                    </div>
+
+                    <!-- Player Last Name -->
+                    <div
+                      class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1"
+                      id="PlayerName"
+                    >
+                      Beriane
+                    </div>
+
+                    <!-- Player Statistics -->
+                    <div class="absolute bottom-6 w-full px-3">
+                      <div
+                        class="grid grid-cols-2 text-center text-xs font-bold"
+                      >
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PHY</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">SHO</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PAS</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">DRI</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="Defence flex items-center justify-around">
+                <div class="LeftB player flex flex-col justify-center">
+                  <div
+                    class="relative w-[130px] h-[180px] max-sm:w-[100px] overflow-hidden text-white bg-cover bg-center"
+                    style="
+                      background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');
+                    "
+                  >
+                    <!-- Delete Button -->
+                    <button
+                      class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+
+                    <!-- Player Icon -->
+                    <div class="flex justify-center mt-6">
+                      <img
+                        class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg"
+                      />
+                    </div>
+
+                    <!-- Player Last Name -->
+                    <div
+                      class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1"
+                      id="PlayerName"
+                    >
+                      Beriane
+                    </div>
+
+                    <!-- Player Statistics -->
+                    <div class="absolute bottom-6 w-full px-3">
+                      <div
+                        class="grid grid-cols-2 text-center text-xs font-bold"
+                      >
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PHY</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">SHO</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PAS</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">DRI</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="CenterB1 player flex flex-col justify-center">
+                  <div
+                    class="relative w-[130px] h-[180px] max-sm:w-[100px] overflow-hidden text-white bg-cover bg-center"
+                    style="
+                      background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');
+                    "
+                  >
+                    <!-- Delete Button -->
+                    <button
+                      class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+
+                    <!-- Player Icon -->
+                    <div class="flex justify-center mt-6">
+                      <img
+                        class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg"
+                      />
+                    </div>
+
+                    <!-- Player Last Name -->
+                    <div
+                      class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1"
+                      id="PlayerName"
+                    >
+                      Beriane
+                    </div>
+
+                    <!-- Player Statistics -->
+                    <div class="absolute bottom-6 w-full px-3">
+                      <div
+                        class="grid grid-cols-2 text-center text-xs font-bold"
+                      >
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PHY</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">SHO</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PAS</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">DRI</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="CenterB2 player flex flex-col justify-center">
+                  <div
+                    class="relative w-[130px] h-[180px] max-sm:w-[100px] overflow-hidden text-white bg-cover bg-center"
+                    style="
+                      background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');
+                    "
+                  >
+                    <!-- Delete Button -->
+                    <button
+                      class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+
+                    <!-- Player Icon -->
+                    <div class="flex justify-center mt-6">
+                      <img
+                        class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg"
+                      />
+                    </div>
+
+                    <!-- Player Last Name -->
+                    <div
+                      class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1"
+                      id="PlayerName"
+                    >
+                      Beriane
+                    </div>
+
+                    <!-- Player Statistics -->
+                    <div class="absolute bottom-6 w-full px-3">
+                      <div
+                        class="grid grid-cols-2 text-center text-xs font-bold"
+                      >
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PHY</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">SHO</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PAS</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">DRI</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="RightB player flex flex-col justify-center">
+                  <div
+                    class="relative w-[130px] h-[180px] max-sm:w-[100px] overflow-hidden text-white bg-cover bg-center"
+                    style="
+                      background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');
+                    "
+                  >
+                    <!-- Delete Button -->
+                    <button
+                      class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+
+                    <!-- Player Icon -->
+                    <div class="flex justify-center mt-6">
+                      <img
+                        class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg"
+                      />
+                    </div>
+
+                    <!-- Player Last Name -->
+                    <div
+                      class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1"
+                      id="PlayerName"
+                    >
+                      Beriane
+                    </div>
+
+                    <!-- Player Statistics -->
+                    <div class="absolute bottom-6 w-full px-3">
+                      <div
+                        class="grid grid-cols-2 text-center text-xs font-bold"
+                      >
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PHY</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">SHO</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">PAS</span>
+                        </div>
+                        <div>
+                          <span class="text-yellow-400">20</span>
+                          <span style="font-size: 8px">DRI</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
