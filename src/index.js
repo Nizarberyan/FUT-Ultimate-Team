@@ -1328,3 +1328,4 @@ function renderFieldPlayers() {
 }
 
 renderFieldPlayers();
+
