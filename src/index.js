@@ -241,7 +241,7 @@ let playerDatabase = [
     physical: 88,
   },
   {
-    name: "N'Golo Kanté",
+    name: "N Golo Kanté",
     photo: "https://cdn.sofifa.net/players/215/914/25_120.png",
     position: "CDM",
     nationality: "France",
@@ -327,6 +327,7 @@ let playerDatabase = [
     nationality: "England",
     flag: "https://cdn.sofifa.net/flags/gb-eng.png",
     club: "Liverpool",
+    logo: "https://cdn.sofifa.net/meta/team/8/120.png",
     rating: 87,
     pace: 76,
     shooting: 66,
@@ -421,8 +422,6 @@ if (localStorage.getItem("playerDatabase") === "[]") {
 } else {
   playerDatabase = JSON.parse(localStorage.getItem("playerDatabase"));
 }
-
-//formations Database
 
 //Formation state
 let state = {
@@ -549,7 +548,7 @@ function renderAvailablePlayers(searchTerm = "") {
       </div>
       <!-- Remove Button -->
       <button 
-        class="absolute top-2 right-16 bg-blue-500 text-white text-sm px-2 py-1 rounded hover:bg-blue-600 transition edit-btn"
+        class="absolute top-2 left-4 bg-blue-500 text-white text-sm px-2 py-1 rounded hover:bg-blue-600 transition edit-btn"
         title="Edit Player">
         Edit
       </button>
@@ -582,8 +581,112 @@ function renderAvailablePlayers(searchTerm = "") {
 
     // Add "Add to Squad" functionality to the card
     playerCard.addEventListener("click", () => addToSquad(player));
-
     playerList.appendChild(playerCard);
+
+    playerCard.addEventListener("click", () => {
+      selectedPlayers.forEach((selectedPlayer) => {
+        let currentFieldSection = null;
+        playerLastName = player.name.split(" ")[1];
+        console.log(playerLastName);
+        const statsHTML = isGoalkeeper
+          ? `
+        <div>
+          <span class="text-yellow-400">${player.diving}</span>
+          <span style="font-size: 8px;">DIV</span>
+        </div>
+        <div>
+          <span class="text-yellow-400">${player.handling}</span>
+          <span style="font-size: 8px;">HAN</span>
+        </div>
+        <div>
+          <span class="text-yellow-400">${player.reflexes}</span>
+          <span style="font-size: 8px;">REF</span>
+        </div>
+        <div>
+          <span class="text-yellow-400">${player.speed}</span>
+          <span style="font-size: 8px;">SPD</span>
+        </div>
+      `
+          : `
+        <div>
+          <span class="text-yellow-400">${player.physical}</span>
+          <span style="font-size: 8px;">PHY</span>
+        </div>
+        <div>
+          <span class="text-yellow-400">${player.shooting}</span>
+          <span style="font-size: 8px;">SHO</span>
+        </div>
+        <div>
+          <span class="text-yellow-400">${player.passing}</span>
+          <span style="font-size: 8px;">PAS</span>
+        </div>
+        <div>
+          <span class="text-yellow-400">${player.dribbling}</span>
+          <span style="font-size: 8px;">DRI</span>
+        </div>
+      `;
+        let fieldCard = `<div 
+      class="relative w-[130px] h-[180px] max-sm:w-[100px] rounded-[12px] overflow-hidden shadow-lg text-white bg-cover bg-center" 
+      style="background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');">
+      
+      <!-- Delete Button -->
+      <button 
+        class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+        onclick="removeFromSquad('${player.name}')">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      
+      <!-- Player Icon -->
+      <div class="flex justify-center mt-6">
+        <img 
+          class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg" 
+          src="${player.photo}" 
+          alt="${player.name}">
+      </div>
+      
+      <!-- Player Last Name -->
+      <div 
+        class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1" 
+        id="PlayerName">
+        ${playerLastName}
+      </div>
+      
+      <!-- Player Statistics -->
+      <div class="absolute bottom-6 w-full px-3">
+        <div class="grid grid-cols-2 text-center text-xs font-bold">
+          ${statsHTML}
+        </div>
+      </div>
+    </div>
+  `;
+        if (player.name === selectedPlayer.name) {
+          if (
+            player.position === "CM" ||
+            player.position === "CB" ||
+            player.position === "CDM"
+          ) {
+            currentFieldSection = document.querySelector(".Midfield");
+          } else if (
+            player.position === "LB" ||
+            player.position == "RB" ||
+            player.position === "CB"
+          ) {
+            currentFieldSection = document.querySelector(".Defense");
+          } else if (
+            player.position === "ST" ||
+            player.position === "LW" ||
+            player.position === "RW"
+          ) {
+            currentFieldSection = document.querySelector(".Attack");
+          } else if (player.position === "GK") {
+            currentFieldSection = document.querySelector(".GoalK");
+            currentFieldSection.innerHTML = fieldCard;
+          }
+        }
+      });
+    });
   });
 }
 
@@ -1105,82 +1208,8 @@ const formations = [
   },
 ];
 
-// Function to get the appropriate position for a player in a given formation
-// References to elements
 const field = document.getElementById("field");
 const formationSelect = document.getElementById("formation");
-
-// Track field positions
-let fieldPositions = {};
-
-// Handle placing players on the field
-function addToField(player) {
-  // Get the selected formation
-  const formation = formationSelect.value;
-  const positions = formations[formation];
-
-  // Find an available position for the player's role
-  const playerRole = player.position;
-  const availablePosition = Object.keys(positions).find(
-    (pos) => pos.startsWith(playerRole) && !fieldPositions[pos] // Matches role and is unoccupied
-  );
-
-  if (!availablePosition) {
-    alert("No available position for this player in the current formation.");
-    return;
-  }
-
-  // Mark position as occupied
-  fieldPositions[availablePosition] = player;
-
-  // Create a card for the player
-  const playerCard = document.createElement("div");
-  playerCard.className =
-    "absolute w-[130px] h-[180px] rounded-[12px] overflow-hidden shadow-lg text-white bg-cover bg-center";
-  playerCard.style.backgroundImage =
-    "url('src/assets/badge_ballon_dor-removebg-preview.png')";
-  playerCard.style.left = `${positions[availablePosition].x}%`;
-  playerCard.style.top = `${positions[availablePosition].y}%`;
-  playerCard.style.transform = "translate(-50%, -50%)";
-
-  playerCard.innerHTML = `
-    <div class="flex justify-center mt-6">
-      <img 
-        class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg" 
-        src="${player.photo}" 
-        alt="${player.name}">
-    </div>
-    <div class="text-center font-bold text-sm mt-2">${
-      player.name.split(" ").slice(-1)[0]
-    }</div>
-    <div class="grid grid-cols-2 text-center text-xs font-bold mt-2">
-      <div>
-        <span class="text-yellow-400">${player.physical}</span>
-        <span style="font-size: 8px;">PHY</span>
-      </div>
-      <div>
-        <span class="text-yellow-400">${player.shooting}</span>
-        <span style="font-size: 8px;">SHO</span>
-      </div>
-      <div>
-        <span class="text-yellow-400">${player.passing}</span>
-        <span style="font-size: 8px;">PAS</span>
-      </div>
-      <div>
-        <span class="text-yellow-400">${player.dribbling}</span>
-        <span style="font-size: 8px;">DRI</span>
-      </div>
-    </div>
-    <button 
-      class="absolute top-1 right-1 bg-red-500 text-white text-xs px-2 py-1 rounded hover:bg-red-600 transition"
-      onclick="removeFromField('${availablePosition}')">
-      Remove
-    </button>
-  `;
-
-  // Add the card to the field
-  field.appendChild(playerCard);
-}
 
 // Remove a player from the field
 function removeFromField(position) {
@@ -1192,4 +1221,110 @@ function removeFromField(position) {
   delete fieldPositions[position];
 }
 
-// Update player card on click to add to field
+function renderFieldPlayers() {
+  const formationPositions = {
+    "4-4-2": {
+      CM: [".CenterM1", ".CenterM2", ".LeftM442", ".RightM442"],
+      CDM: [".CenterM1", ".CenterM2", ".LeftM442", ".RightM442"],
+      LB: ".LeftB442",
+      RB: ".RightB442",
+      CB: [".CenterB1442", ".CenterB2442"],
+      ST: [".Striker1", ".Striker2"],
+      LW: [".Striker1", ".Striker2"],
+      RW: [".Striker1", ".Striker2"],
+      GK: ".GoalK",
+    },
+    "4-3-3": {
+      CM: [".RightM433", ".CenterM", ".LeftM433"],
+      CDM: [".RightM433", ".CenterM", ".LeftM433"],
+      LB: ".LeftB433",
+      RB: ".RightB433",
+      CB: [".CenterB1433", ".CenterB2433"],
+      ST: ".Striker",
+      LW: ".LeftW",
+      RW: ".RightW",
+      GK: ".GoalK",
+    },
+  };
+
+  function createPlayerCard(player) {
+    const playerLastName = player.name.split(" ")[1];
+    const isGoalkeeper = player.position === "GK";
+
+    const statsHTML = isGoalkeeper
+      ? `
+        <div><span class="text-yellow-400">${player.diving}</span><span style="font-size: 8px;">DIV</span></div>
+        <div><span class="text-yellow-400">${player.handling}</span><span style="font-size: 8px;">HAN</span></div>
+        <div><span class="text-yellow-400">${player.reflexes}</span><span style="font-size: 8px;">REF</span></div>
+        <div><span class="text-yellow-400">${player.speed}</span><span style="font-size: 8px;">SPD</span></div>
+      `
+      : `
+        <div><span class="text-yellow-400">${player.physical}</span><span style="font-size: 8px;">PHY</span></div>
+        <div><span class="text-yellow-400">${player.shooting}</span><span style="font-size: 8px;">SHO</span></div>
+        <div><span class="text-yellow-400">${player.passing}</span><span style="font-size: 8px;">PAS</span></div>
+        <div><span class="text-yellow-400">${player.dribbling}</span><span style="font-size: 8px;">DRI</span></div>
+      `;
+
+    return `
+      <div class="relative w-[130px] h-[180px] max-sm:w-[100px] rounded-[12px] overflow-hidden shadow-lg text-white bg-cover bg-center" 
+           style="background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');">
+        <button class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                onclick="removeFromSquad('${player.name}')">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        
+        <div class="flex justify-center mt-6">
+          <img class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg" 
+               src="${player.photo}" 
+               alt="${player.name}">
+        </div>
+        
+        <div class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1">
+          ${playerLastName}
+        </div>
+        
+        <div class="absolute bottom-6 w-full px-3">
+          <div class="grid grid-cols-2 text-center text-xs font-bold">
+            ${statsHTML}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function placePlayer(player) {
+    const formation = formationSelect.value;
+    const positionMap = formationPositions[formation];
+
+    let targetSelectors = positionMap[player.position];
+
+    // Handle cases where multiple positions are possible
+    if (Array.isArray(targetSelectors)) {
+      for (let selector of targetSelectors) {
+        const element = document.querySelector(selector);
+        if (!element.classList.contains("occupied")) {
+          element.innerHTML = createPlayerCard(player);
+          element.classList.add("occupied");
+          break;
+        }
+      }
+    } else if (targetSelectors) {
+      const element = document.querySelector(targetSelectors);
+      element.innerHTML = createPlayerCard(player);
+      element.classList.add("occupied");
+    }
+  }
+
+  // Clear all previous occupied positions
+  document.querySelectorAll(".occupied").forEach((el) => {
+    el.innerHTML = "";
+    el.classList.remove("occupied");
+  });
+
+  // Render players
+  selectedPlayers.forEach(placePlayer);
+}
+
+renderFieldPlayers();
