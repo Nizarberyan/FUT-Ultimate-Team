@@ -417,12 +417,11 @@ let playerDatabase = [
     positioning: 85,
   },
 ];
-if (localStorage.getItem("playerDatabase") === "[]") {
+if (!localStorage.getItem("playerDatabase") || localStorage.getItem("playerDatabase") === "[]") {
   localStorage.setItem("playerDatabase", JSON.stringify(playerDatabase));
 } else {
   playerDatabase = JSON.parse(localStorage.getItem("playerDatabase"));
 }
-
 //Formation state
 let state = {
   formation: "4-4-2",
