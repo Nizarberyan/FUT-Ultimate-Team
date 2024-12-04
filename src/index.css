@@ -638,6 +638,10 @@ video {
   margin-top: 1.5rem;
 }
 
+.mt-\[38rem\] {
+  margin-top: 38rem;
+}
+
 .block {
   display: block;
 }
@@ -714,8 +718,8 @@ video {
   width: 2rem;
 }
 
-.w-80 {
-  width: 20rem;
+.w-96 {
+  width: 24rem;
 }
 
 .w-\[130px\] {
@@ -786,6 +790,10 @@ video {
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
 }
 
 .overflow-y-scroll {

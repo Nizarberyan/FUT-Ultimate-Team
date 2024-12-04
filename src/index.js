@@ -426,13 +426,8 @@ if (
 } else {
   playerDatabase = JSON.parse(localStorage.getItem("playerDatabase"));
 }
-//Formation state
-let state = {
-  formation: "4-4-2",
-  players: [],
-  chemistry: 100,
-};
-document.getElementById("chemistry").textContent = state.chemistry;
+
+document.getElementById("chemistry").textContent = 100;
 
 let selectedPlayers = JSON.parse(localStorage.getItem("selectedPlayers")) || [];
 
@@ -566,134 +561,24 @@ function renderAvailablePlayers(searchTerm = "") {
       </button>
     `;
 
-    // Add "Remove" button functionality
     playerCard.querySelector(".remove-btn").addEventListener("click", (e) => {
-      e.stopPropagation(); // Prevent triggering the card's click event
+      e.stopPropagation();
 
-      // Remove the player from the playerDatabase
       playerDatabase = playerDatabase.filter((p) => p.name !== player.name);
       localStorage.setItem("playerDatabase", JSON.stringify(playerDatabase));
 
       renderSquad();
 
-      // Re-render the player list
       renderAvailablePlayers(searchTerm);
     });
 
-    // Add "Edit" button functionality
     playerCard.querySelector(".edit-btn").addEventListener("click", (e) => {
-      e.stopPropagation(); // Prevent triggering the card's click event
+      e.stopPropagation();
       openEditModal(player);
     });
 
-    // Add "Add to Squad" functionality to the card
     playerCard.addEventListener("click", () => addToSquad(player));
     playerList.appendChild(playerCard);
-
-    playerCard.addEventListener("click", () => {
-      selectedPlayers.forEach((selectedPlayer) => {
-        let currentFieldSection = null;
-        playerLastName = player.name.split(" ")[1];
-        console.log(playerLastName);
-        const statsHTML = isGoalkeeper
-          ? `
-        <div>
-          <span class="text-yellow-400">${player.diving}</span>
-          <span style="font-size: 8px;">DIV</span>
-        </div>
-        <div>
-          <span class="text-yellow-400">${player.handling}</span>
-          <span style="font-size: 8px;">HAN</span>
-        </div>
-        <div>
-          <span class="text-yellow-400">${player.reflexes}</span>
-          <span style="font-size: 8px;">REF</span>
-        </div>
-        <div>
-          <span class="text-yellow-400">${player.speed}</span>
-          <span style="font-size: 8px;">SPD</span>
-        </div>
-      `
-          : `
-        <div>
-          <span class="text-yellow-400">${player.physical}</span>
-          <span style="font-size: 8px;">PHY</span>
-        </div>
-        <div>
-          <span class="text-yellow-400">${player.shooting}</span>
-          <span style="font-size: 8px;">SHO</span>
-        </div>
-        <div>
-          <span class="text-yellow-400">${player.passing}</span>
-          <span style="font-size: 8px;">PAS</span>
-        </div>
-        <div>
-          <span class="text-yellow-400">${player.dribbling}</span>
-          <span style="font-size: 8px;">DRI</span>
-        </div>
-      `;
-        let fieldCard = `<div 
-      class="relative w-[130px] h-[180px] max-sm:w-[100px] rounded-[12px] overflow-hidden shadow-lg text-white bg-cover bg-center" 
-      style="background-image: url('src/assets/badge_ballon_dor-removebg-preview.png');">
-      
-      <!-- Delete Button -->
-      <button 
-        class="delete-btn absolute top-2 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
-        onclick="removeFromSquad('${player.name}')">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-      
-      <!-- Player Icon -->
-      <div class="flex justify-center mt-6">
-        <img 
-          class="w-20 h-20 object-cover rounded-full border-2 border-white shadow-lg" 
-          src="${player.photo}" 
-          alt="${player.name}">
-      </div>
-      
-      <!-- Player Last Name -->
-      <div 
-        class="absolute bottom-[50px] w-full text-center font-bold text-sm text-white pb-1" 
-        id="PlayerName">
-        ${playerLastName}
-      </div>
-      
-      <!-- Player Statistics -->
-      <div class="absolute bottom-6 w-full px-3">
-        <div class="grid grid-cols-2 text-center text-xs font-bold">
-          ${statsHTML}
-        </div>
-      </div>
-    </div>
-  `;
-        if (player.name === selectedPlayer.name) {
-          if (
-            player.position === "CM" ||
-            player.position === "CB" ||
-            player.position === "CDM"
-          ) {
-            currentFieldSection = document.querySelector(".Midfield");
-          } else if (
-            player.position === "LB" ||
-            player.position == "RB" ||
-            player.position === "CB"
-          ) {
-            currentFieldSection = document.querySelector(".Defense");
-          } else if (
-            player.position === "ST" ||
-            player.position === "LW" ||
-            player.position === "RW"
-          ) {
-            currentFieldSection = document.querySelector(".Attack");
-          } else if (player.position === "GK") {
-            currentFieldSection = document.querySelector(".GoalK");
-            currentFieldSection.innerHTML = fieldCard;
-          }
-        }
-      });
-    });
   });
 }
 
@@ -1070,27 +955,25 @@ function removeFromSquad(playerName) {
 function renderSquad() {
   squadList.innerHTML = "";
 
-  // Filter selected players to include only those still in playerDatabase
+ 
   const validPlayers = selectedPlayers.filter((player) =>
     playerDatabase.some((dbPlayer) => dbPlayer.name === player.name)
   );
 
-  // Update localStorage with the valid players array
+  
   localStorage.setItem("selectedPlayers", JSON.stringify(validPlayers));
 
-  // Update the squad list to match the valid players
+
   validPlayers.forEach((player) => {
     let squadCard = createSquadCard(player);
     squadList.appendChild(squadCard);
   });
 }
 
-// Initial rendering of the squad
+
 renderSquad();
 
-// Add this to the existing index.js file
 
-// Function to open the custom player modal
 function openCustomPlayerModal() {
   const modalOverlay = document.createElement("div");
   modalOverlay.id = "customPlayerModalOverlay";
@@ -1335,37 +1218,7 @@ document.addEventListener("DOMContentLoaded", () => {
   searchContainer.appendChild(customPlayerBtn);
 });
 
-// Update the formations database to include explicit position mappings
-const formations = [
-  {
-    "4-4-2": {
-      GK: { x: 50, y: 90 },
-      LB: { x: 20, y: 70 },
-      CB1: { x: 35, y: 70 },
-      CB2: { x: 65, y: 70 },
-      RB: { x: 80, y: 70 },
-      LM: { x: 20, y: 45 },
-      CM1: { x: 35, y: 45 },
-      CM2: { x: 65, y: 45 },
-      RM: { x: 80, y: 45 },
-      ST1: { x: 35, y: 20 },
-      ST2: { x: 65, y: 20 },
-    },
-    "4-3-3": {
-      GK: { x: 50, y: 90 },
-      LB: { x: 20, y: 70 },
-      CB1: { x: 35, y: 70 },
-      CB2: { x: 65, y: 70 },
-      RB: { x: 80, y: 70 },
-      CM1: { x: 35, y: 45 },
-      CM2: { x: 50, y: 45 },
-      CM3: { x: 65, y: 45 },
-      LW: { x: 20, y: 20 },
-      ST: { x: 50, y: 20 },
-      RW: { x: 80, y: 20 },
-    },
-  },
-];
+
 
 const field = document.getElementById("field");
 const formationSelect = document.getElementById("formation");
