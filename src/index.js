@@ -417,7 +417,11 @@ let playerDatabase = [
     positioning: 85,
   },
 ];
-if (!localStorage.getItem("playerDatabase") || localStorage.getItem("playerDatabase") === "[]") {
+
+if (
+  !localStorage.getItem("playerDatabase") ||
+  localStorage.getItem("playerDatabase") === "[]"
+) {
   localStorage.setItem("playerDatabase", JSON.stringify(playerDatabase));
 } else {
   playerDatabase = JSON.parse(localStorage.getItem("playerDatabase"));
@@ -429,6 +433,8 @@ let state = {
   chemistry: 100,
 };
 document.getElementById("chemistry").textContent = state.chemistry;
+
+let selectedPlayers = JSON.parse(localStorage.getItem("selectedPlayers")) || [];
 
 let playerList = document.getElementById("playerList");
 
@@ -442,9 +448,11 @@ if (selectFormation.value === "4-4-2") {
 }
 selectFormation.addEventListener("change", (e) => {
   if (selectFormation.value === "4-4-2") {
+    window.location.reload();
     document.getElementById("formation433").classList.add("hidden");
     document.getElementById("formation442").classList.remove("hidden");
   } else if (selectFormation.value === "4-3-3") {
+    window.location.reload();
     document.getElementById("formation442").classList.add("hidden");
     document.getElementById("formation433").classList.remove("hidden");
   }
@@ -690,42 +698,11 @@ function renderAvailablePlayers(searchTerm = "") {
 }
 
 // Open Edit Modal
-function openEditModal(player) {
-  const modal = document.getElementById("editPlayerModal");
-  modal.classList.remove("hidden");
-
-  // Populate the form with player data
-  document.getElementById("editName").value = player.name;
-  document.getElementById("editClub").value = player.club;
-  document.getElementById("editNationality").value = player.nationality;
-  document.getElementById("editPosition").value = player.position;
-  document.getElementById("editRating").value = player.rating;
-
-  // Save changes
-  document.getElementById("savePlayerBtn").onclick = () => {
-    player.name = document.getElementById("editName").value;
-    player.club = document.getElementById("editClub").value;
-    player.nationality = document.getElementById("editNationality").value;
-    player.position = document.getElementById("editPosition").value;
-    player.rating = parseInt(document.getElementById("editRating").value, 10);
-
-    // Update player in the database
-    localStorage.setItem("playerDatabase", JSON.stringify(playerDatabase));
-
-    // Re-render players
-    renderAvailablePlayers();
-
-    // Close the modal
-    modal.classList.add("hidden");
-  };
-}
-
-// Close modal
-// Dynamically create and insert the modal into the DOM
 function createEditPlayerModal() {
   const modalHTML = `
-    <div id="editPlayerModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50">
-      <div class="bg-white p-6 rounded-lg shadow-lg w-80">
+    <div id="editPlayerModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50 overflow-y-auto">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96 mt-[38rem]">
+
         <h2 class="text-xl font-bold mb-4">Edit Player</h2>
         <div class="space-y-4">
           <div>
@@ -742,13 +719,86 @@ function createEditPlayerModal() {
           </div>
           <div>
             <label for="editPosition" class="block text-sm font-medium">Position</label>
-            <input type="text" id="editPosition" class="w-full border p-2 rounded">
+            <select id="editPosition" class="w-full border p-2 rounded">
+              <option value="GK">Goalkeeper (GK)</option>
+              <option value="ST">Striker (ST)</option>
+              <option value="LW">Left Wing (LW)</option>
+              <option value="RW">Right Wing (RW)</option>
+              <option value="CM">Central Midfielder (CM)</option>
+              <option value="CDM">Defensive Midfielder (CDM)</option>
+              <option value="LB">Left Back (LB)</option>
+              <option value="RB">Right Back (RB)</option>
+              <option value="CB">Center Back (CB)</option>
+            </select>
           </div>
           <div>
-            <label for="editRating" class="block text-sm font-medium">Rating</label>
-            <input type="number" id="editRating" class="w-full border p-2 rounded">
+            <label for="editPhoto" class="block text-sm font-medium">Photo URL</label>
+            <input type="text" id="editPhoto" class="w-full border p-2 rounded">
+          </div>
+          <div>
+            <label for="editFlag" class="block text-sm font-medium">Flag URL</label>
+            <input type="text" id="editFlag" class="w-full border p-2 rounded">
+          </div>
+          <div>
+            <label for="editLogo" class="block text-sm font-medium">Logo URL</label>
+            <input type="text" id="editLogo" class="w-full border p-2 rounded">
           </div>
         </div>
+
+        <div id="editOutfieldStats" class="space-y-4 mt-4">
+          <div>
+            <label for="editPace" class="block text-sm font-medium">Pace</label>
+            <input type="number" id="editPace" class="w-full border p-2 rounded" min="0" max="99">
+          </div>
+          <div>
+            <label for="editShooting" class="block text-sm font-medium">Shooting</label>
+            <input type="number" id="editShooting" class="w-full border p-2 rounded" min="0" max="99">
+          </div>
+          <div>
+            <label for="editPassing" class="block text-sm font-medium">Passing</label>
+            <input type="number" id="editPassing" class="w-full border p-2 rounded" min="0" max="99">
+          </div>
+          <div>
+            <label for="editDribbling" class="block text-sm font-medium">Dribbling</label>
+            <input type="number" id="editDribbling" class="w-full border p-2 rounded" min="0" max="99">
+          </div>
+          <div>
+            <label for="editDefending" class="block text-sm font-medium">Defending</label>
+            <input type="number" id="editDefending" class="w-full border p-2 rounded" min="0" max="99">
+          </div>
+          <div>
+            <label for="editPhysical" class="block text-sm font-medium">Physical</label>
+            <input type="number" id="editPhysical" class="w-full border p-2 rounded" min="0" max="99">
+          </div>
+        </div>
+
+        <div id="editGoalkeeperStats" class="space-y-4 mt-4 hidden">
+          <div>
+            <label for="editDiving" class="block text-sm font-medium">Diving</label>
+            <input type="number" id="editDiving" class="w-full border p-2 rounded" min="0" max="99">
+          </div>
+          <div>
+            <label for="editHandling" class="block text-sm font-medium">Handling</label>
+            <input type="number" id="editHandling" class="w-full border p-2 rounded" min="0" max="99">
+          </div>
+          <div>
+            <label for="editKicking" class="block text-sm font-medium">Kicking</label>
+            <input type="number" id="editKicking" class="w-full border p-2 rounded" min="0" max="99">
+          </div>
+          <div>
+            <label for="editReflexes" class="block text-sm font-medium">Reflexes</label>
+            <input type="number" id="editReflexes" class="w-full border p-2 rounded" min="0" max="99">
+          </div>
+          <div>
+            <label for="editSpeed" class="block text-sm font-medium">Speed</label>
+            <input type="number" id="editSpeed" class="w-full border p-2 rounded" min="0" max="99">
+          </div>
+          <div>
+            <label for="editPositioning" class="block text-sm font-medium">Positioning</label>
+            <input type="number" id="editPositioning" class="w-full border p-2 rounded" min="0" max="99">
+          </div>
+        </div>
+
         <div class="mt-6 flex justify-end space-x-4">
           <button id="closeModalBtn" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
           <button id="savePlayerBtn" class="px-4 py-2 bg-blue-500 text-white rounded">Save</button>
@@ -757,31 +807,141 @@ function createEditPlayerModal() {
     </div>
   `;
 
-  // Append the modal HTML to the body
   const modalContainer = document.createElement("div");
   modalContainer.innerHTML = modalHTML;
   document.body.appendChild(modalContainer);
 
-  // Add functionality to close the modal
+  document.getElementById("editPosition").addEventListener("change", (e) => {
+    const outfieldStats = document.getElementById("editOutfieldStats");
+    const goalkeeperStats = document.getElementById("editGoalkeeperStats");
+
+    if (e.target.value === "GK") {
+      outfieldStats.classList.add("hidden");
+      goalkeeperStats.classList.remove("hidden");
+    } else {
+      outfieldStats.classList.remove("hidden");
+      goalkeeperStats.classList.add("hidden");
+    }
+  });
+
   document.getElementById("closeModalBtn").addEventListener("click", () => {
     document.getElementById("editPlayerModal").classList.add("hidden");
   });
 }
 
-// Call the function to create the modal when the page loads
 createEditPlayerModal();
 
-renderAvailablePlayers();
+function openEditModal(player) {
+  const modal = document.getElementById("editPlayerModal");
+  modal.classList.remove("hidden");
 
-// Function to handle player search input
-document.getElementById("playerSearch").addEventListener("input", (e) => {
-  renderAvailablePlayers(e.target.value);
-});
+  document.getElementById("editName").value = player.name;
+  document.getElementById("editClub").value = player.club;
+  document.getElementById("editNationality").value = player.nationality;
+  document.getElementById("editPosition").value = player.position;
+  document.getElementById("editPhoto").value = player.photo || "";
+  document.getElementById("editFlag").value = player.flag || "";
+  document.getElementById("editLogo").value = player.logo || "";
 
-let selectedPlayers = [];
-selectedPlayers = JSON.parse(localStorage.getItem("selectedPlayers")) || [];
+  if (player.position === "GK") {
+    document.getElementById("editOutfieldStats").classList.add("hidden");
+    document.getElementById("editGoalkeeperStats").classList.remove("hidden");
 
-// Function to add player to the squad
+    document.getElementById("editDiving").value = player.diving || 50;
+    document.getElementById("editHandling").value = player.handling || 50;
+    document.getElementById("editKicking").value = player.kicking || 50;
+    document.getElementById("editReflexes").value = player.reflexes || 50;
+    document.getElementById("editSpeed").value = player.speed || 50;
+    document.getElementById("editPositioning").value = player.positioning || 50;
+  } else {
+    document.getElementById("editOutfieldStats").classList.remove("hidden");
+    document.getElementById("editGoalkeeperStats").classList.add("hidden");
+
+    document.getElementById("editPace").value = player.pace || 50;
+    document.getElementById("editShooting").value = player.shooting || 50;
+    document.getElementById("editPassing").value = player.passing || 50;
+    document.getElementById("editDribbling").value = player.dribbling || 50;
+    document.getElementById("editDefending").value = player.defending || 50;
+    document.getElementById("editPhysical").value = player.physical || 50;
+  }
+
+  document.getElementById("savePlayerBtn").onclick = () => {
+    player.name = document.getElementById("editName").value;
+    player.club = document.getElementById("editClub").value;
+    player.nationality = document.getElementById("editNationality").value;
+    player.position = document.getElementById("editPosition").value;
+    player.photo = document.getElementById("editPhoto").value;
+    player.flag = document.getElementById("editFlag").value;
+    player.logo = document.getElementById("editLogo").value;
+
+    if (player.position === "GK") {
+      player.diving = parseInt(document.getElementById("editDiving").value, 10);
+      player.handling = parseInt(
+        document.getElementById("editHandling").value,
+        10
+      );
+      player.kicking = parseInt(
+        document.getElementById("editKicking").value,
+        10
+      );
+      player.reflexes = parseInt(
+        document.getElementById("editReflexes").value,
+        10
+      );
+      player.speed = parseInt(document.getElementById("editSpeed").value, 10);
+      player.positioning = parseInt(
+        document.getElementById("editPositioning").value,
+        10
+      );
+      player.rating = Math.round(
+        (player.diving +
+          player.handling +
+          player.kicking +
+          player.reflexes +
+          player.speed +
+          player.positioning) /
+          6
+      );
+    } else {
+      player.pace = parseInt(document.getElementById("editPace").value, 10);
+      player.shooting = parseInt(
+        document.getElementById("editShooting").value,
+        10
+      );
+      player.passing = parseInt(
+        document.getElementById("editPassing").value,
+        10
+      );
+      player.dribbling = parseInt(
+        document.getElementById("editDribbling").value,
+        10
+      );
+      player.defending = parseInt(
+        document.getElementById("editDefending").value,
+        10
+      );
+      player.physical = parseInt(
+        document.getElementById("editPhysical").value,
+        10
+      );
+      player.rating = Math.round(
+        (player.pace +
+          player.shooting +
+          player.passing +
+          player.dribbling +
+          player.defending +
+          player.physical) /
+          6
+      );
+    }
+
+    localStorage.setItem("playerDatabase", JSON.stringify(playerDatabase));
+
+    renderAvailablePlayers();
+
+    modal.classList.add("hidden");
+  };
+}
 
 function addToSquad(player) {
   if (selectedPlayers.length < 11) {
@@ -1327,4 +1487,3 @@ function renderFieldPlayers() {
 }
 
 renderFieldPlayers();
-
